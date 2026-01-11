@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "lernapp",
-    "slug": "lernapp",
+    "name": "LernApp",
+    "slug": "LernApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -19,7 +19,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.foerdi.lernapp"
     },
     "web": {
       "output": "static",
@@ -41,8 +42,13 @@
       ]
     ],
     "experiments": {
-      "typedRoutes": true,
-      "reactCompiler": true
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "0341ccf9-d7cc-441e-a1b0-ba54e8ea4201"
+      }
     }
   }
 }
