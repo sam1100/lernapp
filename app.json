@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "LernApp",
-    "slug": "LernApp",
+    "slug": "lernapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -47,8 +47,9 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "0341ccf9-d7cc-441e-a1b0-ba54e8ea4201"
+        "projectId": "2f3d2f67-45f4-4a76-a165-c5bfeb6097ef"
       }
-    }
+    },
+    "owner": "foerdi1100"
   }
 }

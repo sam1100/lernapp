@@ -36,6 +36,8 @@ export const createStyles = () => {
             aspectRatio: 400 / 455,
             boxShadow: "0 0 10px 10px rgba(102, 176, 211, 0.4)",
             transform: [{ rotate: "-10deg" }],
+            borderRadius: 12,
+            overflow: "hidden",
         },
         subjectImage: {
             width: "90%",
