@@ -97,45 +97,41 @@ export default function GermanWordsSubject({ headerImage, words }: { headerImage
         <SafeAreaView style={styles.containerLayout} edges={[]}>
             <HeaderSubject theme={germanTheme} styles={styles} image={headerImage} />
             <ImageBackground source={tableImage} resizeMode="cover" style={styles.workspace}>
-                {wordsServiceRef.current && (
-                    <View style={styles.subjectWorkspace}>
-                        {wordsServiceRef.current?.hasNext() ? (
-                            <>
-                                <ProgressBar progressParts={progressParts} doneCount={doneCount} totalCount={totalCount} />
+                {wordsServiceRef.current?.hasNext() ? (
+                    <>
+                        <ProgressBar progressParts={progressParts} doneCount={doneCount} totalCount={totalCount} />
 
-                                <View>
-                                    <View >
-                                        {revealed ? (
-                                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                        <View>
+                            <View >
+                                {revealed ? (
+                                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
 
-                                                <View style={styles.composedWordContainer}>
-                                                    {exercise!.wordConfig.word.map((config, index) => (
-                                                        <Text key={index} style={[styles.exercise, config.emphasise ? styles.emphasiseWordPart : undefined]}>{config.text}</Text>
+                                        <View style={styles.composedWordContainer}>
+                                            {exercise!.wordConfig.word.map((config, index) => (
+                                                <Text key={index} style={[styles.exercise, config.emphasise ? styles.emphasiseWordPart : undefined]}>{config.text}</Text>
 
-                                                    ))}
-                                                </View>
-                                            </View>
-                                        ) : (
-                                            <>
-                                                <TouchableOpacity onPress={() => { speak(exercise!.word) }}><Image source={readWordButton} resizeMode="contain" style={styles.subjectButton} /></TouchableOpacity>
-                                                <TouchableOpacity onPress={() => { revealAnswer() }}><Image source={showWordButton} resizeMode="contain" style={styles.subjectButton} /></TouchableOpacity>
-                                            </>
-                                        )}
+                                            ))}
+                                        </View>
                                     </View>
-                                    <View style={styles.buttonContainer}>
-                                        {revealed && (
-                                            <>
-                                                <TouchableOpacity onPress={() => { checkAnswer(true) }}><Image source={correctAnswerButton} resizeMode="contain" style={styles.subjectButton} /></TouchableOpacity>
-                                                <TouchableOpacity onPress={() => { checkAnswer(false) }}><Image source={wrongAnswerButton} resizeMode="contain" style={styles.subjectButton} /></TouchableOpacity>
-                                            </>
-                                        )}
-                                    </View>
-                                </View>
-                            </>
-                        ) : (
-                            <ExerciseDone correctAnswerCount={wordsServiceRef.current?.getCorrectAnswersCount() ?? 0} wrongAnswerCount={wordsServiceRef.current?.getWrongAnswersCount() ?? 0} styles={styles} />
-                        )}
-                    </View>
+                                ) : (
+                                    <>
+                                        <TouchableOpacity onPress={() => { speak(exercise!.word) }}><Image source={readWordButton} resizeMode="contain" style={styles.subjectButton} /></TouchableOpacity>
+                                        <TouchableOpacity onPress={() => { revealAnswer() }}><Image source={showWordButton} resizeMode="contain" style={styles.subjectButton} /></TouchableOpacity>
+                                    </>
+                                )}
+                            </View>
+                            <View style={styles.buttonContainer}>
+                                {revealed && (
+                                    <>
+                                        <TouchableOpacity onPress={() => { checkAnswer(true) }}><Image source={correctAnswerButton} resizeMode="contain" style={styles.subjectButton} /></TouchableOpacity>
+                                        <TouchableOpacity onPress={() => { checkAnswer(false) }}><Image source={wrongAnswerButton} resizeMode="contain" style={styles.subjectButton} /></TouchableOpacity>
+                                    </>
+                                )}
+                            </View>
+                        </View>
+                    </>
+                ) : (
+                    <ExerciseDone correctAnswerCount={wordsServiceRef.current?.getCorrectAnswersCount() ?? 0} wrongAnswerCount={wordsServiceRef.current?.getWrongAnswersCount() ?? 0} styles={styles} />
                 )}
             </ImageBackground>
         </SafeAreaView >

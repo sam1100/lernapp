@@ -50,11 +50,11 @@ export const createStyles = () => {
             alignContent: "center",
             gap: 15,
         },
-        workspaceHorizontal: {
+        horizontalContainer: {
             flexDirection: "row",
             alignItems: "center",
             alignContent: "center",
-            marginTop: 20,
+            marginTop: 0,
         },
         subjectWorkspace: {
             flex: 1,
@@ -76,9 +76,7 @@ export const createStyles = () => {
             height: 75,
         },
         exerciseContainer: {
-            flexDirection: "row",
-            alignItems: "center",
-
+            marginTop: 0,
         },
         exercise: {
             paddingTop: 20,
@@ -89,6 +87,9 @@ export const createStyles = () => {
         },
         exerciseWrongAnswer: {
             color: "#C00000",
+        },
+        inputContainer: {
+            marginTop: 20,
         },
         exerciseInput: {
             minWidth: 200,

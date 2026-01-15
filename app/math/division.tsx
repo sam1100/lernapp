@@ -92,41 +92,37 @@ const MathDivisionSubject = () => {
     return (
         <SafeAreaView style={styles.containerLayout} edges={[]}>
             <HeaderSubject theme={mathTheme} styles={styles} image={mathButton} />
-            <ImageBackground source={tableImage} resizeMode="cover" style={styles.workspace}>
-                {mathServiceRef.current && (
-                    <View style={styles.subjectWorkspace}>
-                        {mathServiceRef.current?.hasNext() ? (
-                            <>
-                                <ProgressBar progressParts={progressParts} doneCount={doneCount} totalCount={totalCount} />
-
-                                <View style={styles.exerciseContainer}>
-                                    <Text style={styles.exercise}>{exercise?.dividend} ÷ {exercise?.divisor}</Text>
-                                    <Text style={[styles.exercise, styles.exerciseWrongAnswer]}>{answer}</Text>
-                                </View>
-                                <View style={styles.workspaceHorizontal}>
-                                    <TextInput
-                                        ref={inputRef}
-                                        style={[styles.exerciseInput, styles.exerciseInputMathSubject]}
-                                        placeholder=""
-                                        value={!!result ? result.toString() : ''}
-                                        onChangeText={setResult}
-                                        onSubmitEditing={e => checkAnswer(Number(e.nativeEvent.text))}
-                                        placeholderTextColor={"rgb(100,100,100)"}
-                                        keyboardType="numeric"
-                                        returnKeyType="done"
-                                        submitBehavior="blurAndSubmit"
-                                    />
-                                    {isAnswerCorrect !== null && (isAnswerCorrect ? <Ionicons name='checkmark-circle-outline' color="green" size={52} /> : <Ionicons name='close-circle-outline' color="#C00000" size={52} />)}
-                                </View>
-                                <View style={{ marginTop: 30 }}>
-                                    {isAnswerCorrect !== null && (!isAnswerCorrect ? <TouchableOpacity onPress={() => { nextExercise() }}><Image source={nextImage} resizeMode="contain" style={styles.subjectButton} /></TouchableOpacity> : null)}
-                                </View>
-                            </>
-                        ) : (
-                            <ExerciseDone correctAnswerCount={mathServiceRef.current?.getCorrectAnswersCount() ?? 0} wrongAnswerCount={mathServiceRef.current?.getWrongAnswersCount() ?? 0} styles={styles} />
-                        )}
-                    </View>
-                )}
+            <ImageBackground source={tableImage} resizeMode="cover" style={styles.subjectWorkspace}>
+                {mathServiceRef.current?.hasNext() ? (
+                    <>
+                        <ProgressBar progressParts={progressParts} doneCount={doneCount} totalCount={totalCount} />
+                        <View id='exerciseContainer' style={[styles.horizontalContainer, styles.exerciseContainer]}>
+                            <Text style={styles.exercise}>{exercise?.dividend} ÷ {exercise?.divisor}</Text>
+                            <Text style={[styles.exercise, styles.exerciseWrongAnswer]}>{answer}</Text>
+                        </View>
+                        <View id='inputContainer' style={[styles.horizontalContainer, styles.inputContainer]}>
+                            <TextInput
+                                ref={inputRef}
+                                style={[styles.exerciseInput, styles.exerciseInputMathSubject]}
+                                placeholder=""
+                                value={!!result ? result.toString() : ''}
+                                onChangeText={setResult}
+                                onSubmitEditing={e => checkAnswer(Number(e.nativeEvent.text))}
+                                placeholderTextColor={"rgb(100,100,100)"}
+                                keyboardType="numeric"
+                                returnKeyType="done"
+                                submitBehavior="blurAndSubmit"
+                            />
+                            {isAnswerCorrect !== null && (isAnswerCorrect ? <Ionicons name='checkmark-circle-outline' color="green" size={52} /> : <Ionicons name='close-circle-outline' color="#C00000" size={52} />)}
+                        </View>
+                        <View id='buttonContainer' style={{ marginTop: 30 }}>
+                            {isAnswerCorrect !== null && (!isAnswerCorrect ? <TouchableOpacity onPress={() => { nextExercise() }}><Image source={nextImage} resizeMode="contain" style={styles.subjectButton} /></TouchableOpacity> : null)}
+                        </View>
+                    </>
+                ) : (
+                    <ExerciseDone correctAnswerCount={mathServiceRef.current?.getCorrectAnswersCount() ?? 0} wrongAnswerCount={mathServiceRef.current?.getWrongAnswersCount() ?? 0} styles={styles} />
+                )
+                }
             </ImageBackground>
         </SafeAreaView>
     )

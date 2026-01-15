@@ -41,7 +41,7 @@ const englishTheme: SubjetTheme = {
 };
 const timeTheme: SubjetTheme = {
     gradients: {
-        header: ['#C3E148', '#56B030'],
+        header: ['#FEF9C1', '#D46804'],
         workspace: ['#FCEBC8', '#BE7A4F']
     }
 };

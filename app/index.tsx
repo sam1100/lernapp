@@ -23,7 +23,7 @@ export default function Index() {
               <Image source={require('@/assets/images/mathe-button.png')} resizeMode="contain" style={styles.subjectButton} />
             </Link>
             <Link href="/time" >
-              <Image source={require('@/assets/images/uhrzeit-button.png')} resizeMode="contain" style={styles.subjectButton} />
+              <Image source={require('@/assets/images/time-button.png')} resizeMode="contain" style={styles.subjectButton} />
             </Link>
             <Link href="/german" >
               <Image source={require('@/assets/images/german-button.png')} resizeMode="contain" style={styles.subjectButton} />
