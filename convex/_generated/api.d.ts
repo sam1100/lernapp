@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as german from "../german.js";
 import type * as math from "../math.js";
 
 import type {
@@ -17,6 +18,7 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  german: typeof german;
   math: typeof math;
 }>;
 

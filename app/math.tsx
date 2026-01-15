@@ -7,9 +7,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const workspaceImage = require('@/assets/images/workspace.png');
 
 
-export default function Index() {
+export default function MathSubject() {
 
-    const { mathTheme, colors } = useTheme();
+    const { mathTheme } = useTheme();
     const styles = createStyles();
 
     return (

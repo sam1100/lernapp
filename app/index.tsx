@@ -25,11 +25,11 @@ export default function Index() {
             <Link href="/time" >
               <Image source={require('@/assets/images/uhrzeit-button.png')} resizeMode="contain" style={styles.subjectButton} />
             </Link>
-            <Link href="/deutsch" >
-              <Image source={require('@/assets/images/deutsch-button.png')} resizeMode="contain" style={styles.subjectButton} />
+            <Link href="/german" >
+              <Image source={require('@/assets/images/german-button.png')} resizeMode="contain" style={styles.subjectButton} />
             </Link>
-            <Link href="/englisch" >
-              <Image source={require('@/assets/images/englisch-button.png')} resizeMode="contain" style={styles.subjectButton} />
+            <Link href="/english" >
+              <Image source={require('@/assets/images/english-button.png')} resizeMode="contain" style={styles.subjectButton} />
             </Link>
 
           </ImageBackground>

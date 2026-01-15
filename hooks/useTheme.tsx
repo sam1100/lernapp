@@ -29,7 +29,7 @@ const mathTheme: SubjetTheme = {
 };
 const germanTheme: SubjetTheme = {
     gradients: {
-        header: ['#C3E148', '#56B030'],
+        header: ['#FEC4B4', '#D11E1E'],
         workspace: ['#FCEBC8', '#BE7A4F']
     }
 };

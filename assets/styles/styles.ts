@@ -63,6 +63,12 @@ export const createStyles = () => {
             alignItems: "center",
             alignContent: "center",
         },
+        buttonContainer: {
+            flexDirection: "row",
+            justifyContent: "space-around",
+            width: "100%",
+            marginTop: 30,
+        },
         subjectButton: {
             marginTop: 50,
             marginBottom: 50,
@@ -72,6 +78,7 @@ export const createStyles = () => {
         exerciseContainer: {
             flexDirection: "row",
             alignItems: "center",
+
         },
         exercise: {
             paddingTop: 20,
@@ -98,6 +105,15 @@ export const createStyles = () => {
         exerciseInputMathSubject: {
             borderColor: "#BE7A4F",
             boxShadow: "0 0 6px 6px rgba(190, 122, 79, 0.2)",
+        },
+        emphasiseWordPart: {
+            fontWeight: "bold",
+            color: "#2f6d3a",
+            textDecorationLine: "underline",
+        },
+        composedWordContainer: {
+            flexDirection: "row",
+            gap: 0,
         },
         progressContainer: {
             marginTop: 30,

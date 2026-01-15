@@ -1,12 +1,10 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 
-const englisch = () => {
+export default function EnglishSubject() {
     return (
         <View>
             <Text>englisch</Text>
         </View>
     )
 }
-
-export default englisch

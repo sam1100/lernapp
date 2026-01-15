@@ -11,8 +11,10 @@ export default function RootLayout() {
       <ThemeProvider>
         <Stack>
           <Stack.Screen name="index" options={{ title: "LernApp" }} />
-          <Stack.Screen name="englisch" options={{ title: "Englisch" }} />
-          <Stack.Screen name="deutsch" options={{ title: "Deutsch" }} />
+          <Stack.Screen name="english" options={{ title: "Englisch" }} />
+          <Stack.Screen name="german" options={{ title: "Deutsch" }} />
+          <Stack.Screen name="german/currentwords" options={{ title: "Neue Lernwörter" }} />
+          <Stack.Screen name="german/allwords" options={{ title: "Alle Lernwörter" }} />
           <Stack.Screen name="math" options={{ title: "Mathe" }} />
           <Stack.Screen name="math/multiplication" options={{ title: "1x1" }} />
           <Stack.Screen name="math/division" options={{ title: "Division" }} />

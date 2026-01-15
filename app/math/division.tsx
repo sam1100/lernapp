@@ -1,23 +1,21 @@
 import { createStyles } from '@/assets/styles/styles';
+import ExerciseDone from '@/components/ExerciseDone';
+import HeaderSubject from '@/components/HeaderSubject';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import ProgressBar, { ProgressPart } from '@/components/ProgressBar';
 import { api } from "@/convex/_generated/api";
 import { Doc } from "@/convex/_generated/dataModel";
 import useTheme from '@/hooks/useTheme';
 import { MathDivisionExercise, MathDivisionService } from '@/services/MatchDivisionService';
 import { Ionicons } from '@expo/vector-icons';
 import { useQuery } from "convex/react";
-import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useRef, useState } from 'react';
 import { Image, ImageBackground, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 const tableImage = require('@/assets/images/table.png');
 const nextImage = require('@/assets/images/nextMath.png');
-
-interface ProgressPart {
-    start: number;
-    width: number;
-    colors: [string, string];
-}
+const mathButton = require('@/assets/images/mathe-button.png');
 
 type MathDivision = Doc<"math_division">;
 
@@ -29,6 +27,7 @@ const MathDivisionSubject = () => {
     const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean | null>(null);
     const [progressParts, setProgressParts] = useState<ProgressPart[]>([]);
 
+    const styles = createStyles();
     const mathServiceRef = useRef<MathDivisionService | null>(null);
     const inputRef = useRef<TextInput>(null);
 
@@ -45,7 +44,6 @@ const MathDivisionSubject = () => {
         inputRef.current?.focus();
     }, [divisionConfig]);
 
-    const styles = createStyles();
 
     const nextExercise = () => {
         setIsAnswerCorrect(null);
@@ -58,7 +56,7 @@ const MathDivisionSubject = () => {
         }
     }
 
-    const checkAnswer = (input: number) => {
+    const checkAnswer = (input: number): void => {
         if (!!exercise && !!mathServiceRef.current) {
             const correct = mathServiceRef.current.checkAnswer(input);
             if (correct) {
@@ -93,29 +91,14 @@ const MathDivisionSubject = () => {
 
     return (
         <SafeAreaView style={styles.containerLayout} edges={[]}>
-            <LinearGradient colors={mathTheme.gradients.header}>
-                <View style={styles.headerSubject}>
-                    <Image style={styles.subjectImage} resizeMode='contain' source={require('@/assets/images/mathe-button.png')} />
-                </View>
-            </LinearGradient>
+            <HeaderSubject theme={mathTheme} styles={styles} image={mathButton} />
             <ImageBackground source={tableImage} resizeMode="cover" style={styles.workspace}>
                 {mathServiceRef.current && (
                     <View style={styles.subjectWorkspace}>
                         {mathServiceRef.current?.hasNext() ? (
                             <>
-                                <View id='progressContainer' style={styles.progressContainer}>
-                                    <View id='progressBarContainer' style={styles.progressBarContainer}>
-                                        <View id='progressBar' style={[styles.progressBar, styles.progressBarMathSubject]}>
-                                            {progressParts.map((part, index) => (
-                                                <LinearGradient
-                                                    key={index}
-                                                    colors={part.colors}
-                                                    style={[styles.progressFill, { left: `${part.start}%`, width: `${part.width}%` }]}
-                                                />))}
-                                        </View>
-                                        <Text style={styles.progressTextMathSubject}>{`${doneCount} von ${totalCount}`}</Text>
-                                    </View>
-                                </View>
+                                <ProgressBar progressParts={progressParts} doneCount={doneCount} totalCount={totalCount} />
+
                                 <View style={styles.exerciseContainer}>
                                     <Text style={styles.exercise}>{exercise?.dividend} ÷ {exercise?.divisor}</Text>
                                     <Text style={[styles.exercise, styles.exerciseWrongAnswer]}>{answer}</Text>
@@ -140,13 +123,10 @@ const MathDivisionSubject = () => {
                                 </View>
                             </>
                         ) : (
-                            <View>
-                                <Text style={styles.exercise}>Geschafft! 🎉</Text>
-                                <Text style={styles.exercise}>{`Richtige Antworten: ${mathServiceRef.current?.getCorrectAnswersCount()}`}</Text>
-                                <Text style={styles.exercise}>{`Falsche Antworten: ${mathServiceRef.current?.getWrongAnswersCount()}`}</Text>
-                            </View>
+                            <ExerciseDone correctAnswerCount={mathServiceRef.current?.getCorrectAnswersCount() ?? 0} wrongAnswerCount={mathServiceRef.current?.getWrongAnswersCount() ?? 0} styles={styles} />
                         )}
-                    </View>)}
+                    </View>
+                )}
             </ImageBackground>
         </SafeAreaView>
     )

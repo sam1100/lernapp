@@ -13,5 +13,14 @@ export default defineSchema({
         multipliers: v.array(v.number()),
         repetitions: v.number(),
     }),
+    german_words: defineTable({
+        word: v.array(v.object({
+            text: v.string(),
+            emphasise: v.optional(v.boolean()), // Hex-Farbe wie "#FF0000"
+        })),
+        current: v.boolean(),
+        repetitions: v.number(),
+        type: v.union(v.literal("noun"), v.literal("verb"), v.literal("adjective")),
+    }),
 
 });
