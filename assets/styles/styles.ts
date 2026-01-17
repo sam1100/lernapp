@@ -13,12 +13,15 @@ export const createStyles = () => {
         header: {
             height: 250,
             width: "100%",
+            flexDirection: "row",
             alignItems: "flex-start",
-            paddingHorizontal: 40,
+            paddingLeft: 40,
+            paddingRight: 20,
             paddingVertical: 32,
             paddingBottom: 24,
             borderBottomWidth: 2,
             borderBottomColor: '#30C3E4',
+            gap: 20,
         },
         headerSubject: {
             height: 150,
@@ -32,7 +35,7 @@ export const createStyles = () => {
             borderBottomColor: 'rgb(100,100,100)',
         },
         titleImage: {
-            height: "100%",
+            height: 180,
             aspectRatio: 400 / 455,
             boxShadow: "0 0 10px 10px rgba(102, 176, 211, 0.4)",
             transform: [{ rotate: "-10deg" }],
@@ -41,6 +44,11 @@ export const createStyles = () => {
         },
         subjectImage: {
             width: "90%",
+        },
+        headerCoins: {
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "flex-end",
         },
         workspace: {
             flex: 1,
@@ -161,6 +169,33 @@ export const createStyles = () => {
             fontSize: 18,
             fontWeight: "500",
             color: "#1e293b",
+        },
+
+        coinContainer: {
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            flexGrow: 2,
+        },
+        coinText: {
+            marginTop: 10,
+            fontSize: 30,
+            fontWeight: "bold",
+            color: "#7c3401",
+        },
+        coinWrapper: {
+            height: 80,
+            width: 80,
+        },
+        coinBody: {
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            height: "100%",
+        },
+        coin: {
+            position: "absolute",
+            backfaceVisibility: "hidden",
         },
     });
 

@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as coin from "../coin.js";
 import type * as german from "../german.js";
 import type * as math from "../math.js";
 
@@ -18,6 +19,7 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  coin: typeof coin;
   german: typeof german;
   math: typeof math;
 }>;
