@@ -7,9 +7,6 @@ export const createStyles = () => {
             width: "100%",
             flexDirection: "column",
         },
-        safeArea: {
-            flex: 1,
-        },
         header: {
             height: 250,
             width: "100%",
@@ -42,6 +39,13 @@ export const createStyles = () => {
             borderRadius: 12,
             overflow: "hidden",
         },
+        subjectSelection: {
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 30,
+            minHeight: "100%",
+        },
         subjectImage: {
             width: "90%",
         },
@@ -73,15 +77,28 @@ export const createStyles = () => {
         },
         buttonContainer: {
             flexDirection: "row",
-            justifyContent: "space-around",
+            justifyContent: "center",
             width: "100%",
             marginTop: 30,
+        },
+        button: {
+            width: 200,
+            height: 75,
         },
         subjectButton: {
             marginTop: 50,
             marginBottom: 50,
             width: 200,
             height: 75,
+        },
+        okNokButton: {
+            marginTop: 50,
+            marginBottom: 50,
+            width: 120,
+            height: 60,
+        },
+        collectButton: {
+            marginTop: 20,
         },
         exerciseContainer: {
             marginTop: 0,
@@ -169,6 +186,30 @@ export const createStyles = () => {
             fontSize: 18,
             fontWeight: "500",
             color: "#1e293b",
+        },
+        exerciseDoneContainer: {
+            flex: 1,
+            justifyContent: "flex-start",
+            alignItems: "center",
+        },
+        exerciseDontText: {
+            fontSize: 20,
+            marginTop: 10,
+        },
+        collectRewardsText: {
+            fontSize: 18,
+            fontWeight: "bold",
+            marginTop: 40,
+        },
+        rewardCoinImage: {
+            width: 100,
+            height: 100,
+            marginVertical: 20,
+        },
+        rewardCoinsText: {
+            fontSize: 30,
+            fontWeight: "bold",
+            color: "#7c3401",
         },
 
         coinContainer: {

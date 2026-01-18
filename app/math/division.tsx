@@ -5,6 +5,7 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 import ProgressBar, { ProgressPart } from '@/components/ProgressBar';
 import { api } from "@/convex/_generated/api";
 import { Doc } from "@/convex/_generated/dataModel";
+import { COIN_REASONS } from "@/convex/enums";
 import useTheme from '@/hooks/useTheme';
 import { MathDivisionExercise, MathDivisionService } from '@/services/MatchDivisionService';
 import { Ionicons } from '@expo/vector-icons';
@@ -53,7 +54,8 @@ const MathDivisionSubject = () => {
         if (mathServiceRef.current?.hasNext()) {
             const next = mathServiceRef.current.getNextExercise();
             setExercise(next!);
-        }
+        } else
+            setExercise(null);
     }
 
     const checkAnswer = (input: number): void => {
@@ -115,12 +117,12 @@ const MathDivisionSubject = () => {
                             />
                             {isAnswerCorrect !== null && (isAnswerCorrect ? <Ionicons name='checkmark-circle-outline' color="green" size={52} /> : <Ionicons name='close-circle-outline' color="#C00000" size={52} />)}
                         </View>
-                        <View id='buttonContainer' style={{ marginTop: 30 }}>
+                        <View id='buttonContainer' style={styles.buttonContainer}>
                             {isAnswerCorrect !== null && (!isAnswerCorrect ? <TouchableOpacity onPress={() => { nextExercise() }}><Image source={nextImage} resizeMode="contain" style={styles.subjectButton} /></TouchableOpacity> : null)}
                         </View>
                     </>
                 ) : (
-                    <ExerciseDone correctAnswerCount={mathServiceRef.current?.getCorrectAnswersCount() ?? 0} wrongAnswerCount={mathServiceRef.current?.getWrongAnswersCount() ?? 0} styles={styles} />
+                    <ExerciseDone correctAnswerCount={mathServiceRef.current?.getCorrectAnswersCount() ?? 0} wrongAnswerCount={mathServiceRef.current?.getWrongAnswersCount() ?? 0} rewardCoins={10} reason={COIN_REASONS.MATH_DIVISION} styles={styles} />
                 )
                 }
             </ImageBackground>

@@ -8,9 +8,11 @@
  * @module
  */
 
-import type * as coin from "../coin.js";
+import type * as coins from "../coins.js";
+import type * as enums from "../enums.js";
 import type * as german from "../german.js";
 import type * as math from "../math.js";
+import type * as rewardsConfig from "../rewardsConfig.js";
 
 import type {
   ApiFromModules,
@@ -19,9 +21,11 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
-  coin: typeof coin;
+  coins: typeof coins;
+  enums: typeof enums;
   german: typeof german;
   math: typeof math;
+  rewardsConfig: typeof rewardsConfig;
 }>;
 
 /**

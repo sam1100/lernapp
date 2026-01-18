@@ -17,7 +17,7 @@ type Coins = Doc<"coins">;
 export default function Index() {
   const styles = createStyles();
 
-  const coin = useQuery(api.coin.getAccountBalance);
+  const coin = useQuery(api.coins.getAccountBalance);
   const [amount, setAmount] = useState<Coins | null>(null);
 
   const rotationDuration = 1000; // Dauer der Rotation in Millisekunden
@@ -74,25 +74,22 @@ export default function Index() {
           <Text id="coinText" style={styles.coinText}>{amount ? amount.total_amount.toLocaleString('de-CH') : ''}</Text>
         </View>
       </LinearGradient>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View style={styles.workspace}>
-          <ImageBackground source={workspaceImage} resizeMode="cover" style={styles.workspace}>
-            <Link href="/math" >
-              <Image source={require('@/assets/images/mathe-button.png')} resizeMode="contain" style={styles.subjectButton} />
-            </Link>
-            <Link href="/time" >
-              <Image source={require('@/assets/images/time-button.png')} resizeMode="contain" style={styles.subjectButton} />
-            </Link>
-            <Link href="/german" >
-              <Image source={require('@/assets/images/german-button.png')} resizeMode="contain" style={styles.subjectButton} />
-            </Link>
-            <Link href="/english" >
-              <Image source={require('@/assets/images/english-button.png')} resizeMode="contain" style={styles.subjectButton} />
-            </Link>
+      <ScrollView contentContainerStyle={styles.subjectSelection}>
+        <ImageBackground source={workspaceImage} resizeMode="cover" style={styles.workspace}>
+          <Link href="/math" >
+            <Image source={require('@/assets/images/mathe-button.png')} resizeMode="contain" style={styles.subjectButton} />
+          </Link>
+          <Link href="/time" >
+            <Image source={require('@/assets/images/time-button.png')} resizeMode="contain" style={styles.subjectButton} />
+          </Link>
+          <Link href="/german" >
+            <Image source={require('@/assets/images/german-button.png')} resizeMode="contain" style={styles.subjectButton} />
+          </Link>
+          <Link href="/english" >
+            <Image source={require('@/assets/images/english-button.png')} resizeMode="contain" style={styles.subjectButton} />
+          </Link>
 
-          </ImageBackground>
-        </View>
-
+        </ImageBackground>
       </ScrollView>
     </SafeAreaView>
   );

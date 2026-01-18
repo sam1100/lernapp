@@ -1,6 +1,7 @@
 import { defineSchema, defineTable } from "convex/server";
 
 import { v } from "convex/values";
+import { COIN_REASONS, GERMAN_WORD_TYPES, getEnumValues } from "./enums";
 
 export default defineSchema({
     math_multiplication: defineTable({
@@ -20,12 +21,18 @@ export default defineSchema({
         })),
         current: v.boolean(),
         repetitions: v.number(),
-        type: v.union(v.literal("noun"), v.literal("verb"), v.literal("adjective")),
+        type: v.union(...getEnumValues(GERMAN_WORD_TYPES).map(v.literal)),
     }),
     coins: defineTable({
         amount: v.number(), // Ist negative, wenn Nico Muenzen ausgibt
         total_amount: v.number(),
         date: v.string(),
-        reason: v.union(v.literal("MATH_MULTIPLICATION"), v.literal("MATH_DIVISION"), v.literal("GERMAN_CURRENT_WORDS"), v.literal("GERMAN_ALL_WORDS"), v.literal("TIME_ANALOG_DIGITAL"), v.literal("TIME_DIGITAL_ANALOG"), v.literal("TIME_VERBAL_ANALOG_DIGITAL"), v.literal("SPENT")),
+        reason: v.union(...getEnumValues(COIN_REASONS).map(v.literal)),
+    }),
+    rewards_config: defineTable({
+        reason: v.union(...getEnumValues(COIN_REASONS).map(v.literal)),
+        reward100: v.number(),
+        reward90: v.number(),
+        reward80: v.number(),
     }),
 });

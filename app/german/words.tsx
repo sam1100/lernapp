@@ -1,6 +1,7 @@
 import { createStyles } from "@/assets/styles/styles";
 import ExerciseDone from "@/components/ExerciseDone";
 import HeaderSubject from "@/components/HeaderSubject";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import ProgressBar, { ProgressPart } from "@/components/ProgressBar";
 import { Doc } from "@/convex/_generated/dataModel";
 import useTheme from "@/hooks/useTheme";
@@ -17,7 +18,7 @@ const wrongAnswerButton = require('@/assets/images/wrong-answer-button.png');
 
 type GermanWords = Doc<"german_words">;
 
-export default function GermanWordsSubject({ headerImage, words }: { headerImage: ImageSourcePropType; words: GermanWords[] | null; }) {
+export default function GermanWordsSubject({ headerImage, words, reason }: { headerImage: ImageSourcePropType; words: GermanWords[] | null; reason: string }) {
 
     const { germanTheme, colors } = useTheme();
     const [exercise, setExercise] = useState<WordExercise | null>(null);
@@ -31,9 +32,14 @@ export default function GermanWordsSubject({ headerImage, words }: { headerImage
         if (!words) return;
 
         wordsServiceRef.current = new WordsService(words);
+        const exercise = wordsServiceRef.current.getNextExercise()!;
+
         setRevealed(false);
-        setExercise(wordsServiceRef.current.getNextExercise()!);
+        setExercise(exercise);
         setProgressParts([]);
+
+        if (exercise)
+            speak(exercise!.word);
     }, [words]);
 
 
@@ -42,6 +48,9 @@ export default function GermanWordsSubject({ headerImage, words }: { headerImage
         if (wordsServiceRef.current?.hasNext()) {
             const next = wordsServiceRef.current.getNextExercise();
             setExercise(next!);
+            speak(next!.word);
+        } else {
+            setExercise(null);
         }
     }
 
@@ -93,46 +102,52 @@ export default function GermanWordsSubject({ headerImage, words }: { headerImage
     const totalCount = wordsServiceRef.current?.getTotalExercisesCount() ?? 0;
     const doneCount = wordsServiceRef.current?.getTotalAnswersCount() ?? 0;
 
+    const renderExcercise = () => {
+
+        //        console.log("wordsServiceRef.current", wordsServiceRef.current);
+        //        console.log("wordsServiceRef.current?.hasNext", wordsServiceRef.current?.hasNext());
+
+        if (wordsServiceRef.current == undefined)
+            return <LoadingSpinner />;
+        if (exercise != null)
+            return <>
+                <ProgressBar progressParts={progressParts} doneCount={doneCount} totalCount={totalCount} />
+
+                <View >
+                    {revealed ? (
+                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                            <View style={styles.composedWordContainer}>
+                                {exercise!.wordConfig.word.map((config, index) => (
+                                    <Text key={index} style={[styles.exercise, config.emphasise ? styles.emphasiseWordPart : undefined]}>{config.text}</Text>
+                                ))}
+                            </View>
+                        </View>
+                    ) : (
+                        <>
+                            <TouchableOpacity onPress={() => { speak(exercise!.word) }}><Image source={readWordButton} resizeMode="contain" style={styles.subjectButton} /></TouchableOpacity>
+                            <TouchableOpacity onPress={() => { revealAnswer() }}><Image source={showWordButton} resizeMode="contain" style={styles.subjectButton} /></TouchableOpacity>
+                        </>
+                    )}
+                </View>
+                {revealed && (
+                    <View id='buttonContainer' style={styles.buttonContainer}>
+                        <>
+                            <TouchableOpacity onPress={() => { checkAnswer(true) }}><Image source={correctAnswerButton} resizeMode="contain" style={styles.okNokButton} /></TouchableOpacity>
+                            <TouchableOpacity onPress={() => { checkAnswer(false) }}><Image source={wrongAnswerButton} resizeMode="contain" style={styles.okNokButton} /></TouchableOpacity>
+                        </>
+                    </View>
+                )}
+            </>;
+        else {
+            return <ExerciseDone correctAnswerCount={wordsServiceRef.current?.getCorrectAnswersCount() ?? 0} wrongAnswerCount={wordsServiceRef.current?.getWrongAnswersCount() ?? 0} rewardCoins={10} reason={reason} styles={styles} />;
+        }
+    }
+
     return (
         <SafeAreaView style={styles.containerLayout} edges={[]}>
             <HeaderSubject theme={germanTheme} styles={styles} image={headerImage} />
-            <ImageBackground source={tableImage} resizeMode="cover" style={styles.workspace}>
-                {wordsServiceRef.current?.hasNext() ? (
-                    <>
-                        <ProgressBar progressParts={progressParts} doneCount={doneCount} totalCount={totalCount} />
-
-                        <View>
-                            <View >
-                                {revealed ? (
-                                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-
-                                        <View style={styles.composedWordContainer}>
-                                            {exercise!.wordConfig.word.map((config, index) => (
-                                                <Text key={index} style={[styles.exercise, config.emphasise ? styles.emphasiseWordPart : undefined]}>{config.text}</Text>
-
-                                            ))}
-                                        </View>
-                                    </View>
-                                ) : (
-                                    <>
-                                        <TouchableOpacity onPress={() => { speak(exercise!.word) }}><Image source={readWordButton} resizeMode="contain" style={styles.subjectButton} /></TouchableOpacity>
-                                        <TouchableOpacity onPress={() => { revealAnswer() }}><Image source={showWordButton} resizeMode="contain" style={styles.subjectButton} /></TouchableOpacity>
-                                    </>
-                                )}
-                            </View>
-                            <View style={styles.buttonContainer}>
-                                {revealed && (
-                                    <>
-                                        <TouchableOpacity onPress={() => { checkAnswer(true) }}><Image source={correctAnswerButton} resizeMode="contain" style={styles.subjectButton} /></TouchableOpacity>
-                                        <TouchableOpacity onPress={() => { checkAnswer(false) }}><Image source={wrongAnswerButton} resizeMode="contain" style={styles.subjectButton} /></TouchableOpacity>
-                                    </>
-                                )}
-                            </View>
-                        </View>
-                    </>
-                ) : (
-                    <ExerciseDone correctAnswerCount={wordsServiceRef.current?.getCorrectAnswersCount() ?? 0} wrongAnswerCount={wordsServiceRef.current?.getWrongAnswersCount() ?? 0} styles={styles} />
-                )}
+            <ImageBackground source={tableImage} resizeMode="cover" style={styles.subjectWorkspace}>
+                {renderExcercise()}
             </ImageBackground>
         </SafeAreaView >
     );

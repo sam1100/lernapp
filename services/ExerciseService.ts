@@ -22,7 +22,7 @@ export abstract class ExerciseService<T> {
     protected abstract getNextIndex(): number;
 
     hasNext(): boolean {
-        return this.exercises.length > 0;
+        return this.exercises.length > 1; // Solange die letzte / aktuelle Aufgabe nicht entfernt wurde, ist length >= 1. Daher muss auf > 1 geprüft werden.
     }
 
     checkAnswer(answer: any): boolean {
