@@ -5,7 +5,10 @@ import { Stack } from "expo-router";
 
 const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, { unsavedChangesWarning: false });
 
+
 export default function RootLayout() {
+
+
   return (
     <ConvexProvider client={convex}>
       <ThemeProvider>
@@ -19,6 +22,7 @@ export default function RootLayout() {
           <Stack.Screen name="math/multiplication" options={{ title: "1x1" }} />
           <Stack.Screen name="math/division" options={{ title: "Division" }} />
           <Stack.Screen name="time" options={{ title: "Uhrzeit" }} />
+          <Stack.Screen name="time/analogtodigital" options={{ title: "Analog zu Digital" }} />
         </Stack>
       </ThemeProvider>
     </ConvexProvider>

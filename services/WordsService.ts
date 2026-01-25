@@ -38,9 +38,4 @@ export class WordsService extends ExerciseService<WordExercise> {
     basicCheckAnswer(answer: boolean): boolean {
         return answer;
     }
-
-    protected getNextIndex(): number {
-        return Math.floor(Math.random() * this.exercises.length);
-    }
-
 }

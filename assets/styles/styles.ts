@@ -21,7 +21,7 @@ export const createStyles = () => {
             gap: 20,
         },
         headerSubject: {
-            height: 150,
+            height: 120,
             width: "100%",
             justifyContent: "center",
             alignItems: "center",
@@ -39,15 +39,11 @@ export const createStyles = () => {
             borderRadius: 12,
             overflow: "hidden",
         },
-        subjectSelection: {
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 30,
-            minHeight: "100%",
+        subjectSelectionContainer: {
+            flex: 1,
         },
         subjectImage: {
-            width: "90%",
+            height: 75,
         },
         headerCoins: {
             flex: 1,
@@ -57,10 +53,16 @@ export const createStyles = () => {
         workspace: {
             flex: 1,
             width: "100%",
-            justifyContent: "center",
+            justifyContent: "flex-start",
             alignItems: "center",
             alignContent: "center",
+            paddingTop: 30,
             gap: 15,
+        },
+        workspaceCentered: {
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: 0,
         },
         horizontalContainer: {
             flexDirection: "row",
@@ -157,9 +159,6 @@ export const createStyles = () => {
             backgroundColor: "#d5a47c",
             borderRadius: 10,
         },
-        progressBarMathSubject: {
-            backgroundColor: 'red   ',
-        },
         progressFill: {
             position: "absolute",
             height: "100%",
@@ -212,6 +211,63 @@ export const createStyles = () => {
             color: "#7c3401",
         },
 
+        watchNavigationContainer: {
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: 0,
+        },
+        clockNavigationContainer: {
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+        },
+        clockNavigationButton: {
+            width: 60,
+            height: 50,
+            marginTop: 10,
+        },
+        clockNavigationText: {
+            fontFamily: 'Comfortaa',
+            fontSize: 16,
+            fontWeight: "bold",
+            color: "#333",
+        },
+        clockWrapper: {
+            height: 200,
+            flexGrow: 2,
+        },
+        digitalWatchInput: {
+            minWidth: 150,
+            borderWidth: 2,
+            borderRadius: 10,
+            borderColor: "#cccccc",
+            fontSize: 30,
+            fontFamily: 'digital-7',
+            textAlign: "center",
+        },
+        digitalWatchInputDisabled: {
+            backgroundColor: "#f3f4f6",
+        },
+
+        digitalWatchesContainer: {
+            width: "100%",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 20,
+            padding: 0,
+            margin: 0,
+        },
+
+        watchExceciseNavigationElement: {
+            width: "20%",
+            minHeight: 10,
+            paddingHorizontal: 20,
+        },
+        watchExceciseInputElement: {
+            flexGrow: 1,
+        },
+
         coinContainer: {
             flex: 1,
             justifyContent: "center",
@@ -222,6 +278,7 @@ export const createStyles = () => {
             marginTop: 10,
             fontSize: 30,
             fontWeight: "bold",
+            //            fontFamily: 'Whale I Tried',
             color: "#7c3401",
         },
         coinWrapper: {

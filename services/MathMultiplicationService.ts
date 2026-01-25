@@ -36,9 +36,4 @@ export class MathMultiplicationService extends ExerciseService<MathMultiplierExe
         let exercise: MathMultiplierExercise = this.exercises[this.currentIndex];
         return (exercise!.multiplier1 * exercise!.multiplier2) === answer;
     }
-
-    protected getNextIndex(): number {
-        return Math.floor(Math.random() * this.exercises.length);
-    }
-
 }

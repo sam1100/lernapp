@@ -15,7 +15,7 @@ import { Image, ImageBackground, Text, TextInput, TouchableOpacity, View } from 
 import { SafeAreaView } from 'react-native-safe-area-context';
 const tableImage = require('@/assets/images/table.png');
 const nextImage = require('@/assets/images/nextMath.png');
-const mathButton = require('@/assets/images/mathe-button.png');
+const multiplicationButton = require('@/assets/images/multiplication.png');
 
 interface ProgressPart {
     start: number;
@@ -98,7 +98,7 @@ const MathMultiplicationSubject = () => {
 
     return (
         <SafeAreaView style={styles.containerLayout} edges={[]}>
-            <HeaderSubject theme={mathTheme} styles={styles} image={mathButton} />
+            <HeaderSubject theme={mathTheme} styles={styles} image={multiplicationButton} />
             <ImageBackground source={tableImage} resizeMode="cover" style={styles.subjectWorkspace}>
                 {mathServiceRef.current?.hasNext() ? (
                     <>

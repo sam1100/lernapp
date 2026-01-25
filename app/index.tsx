@@ -74,21 +74,22 @@ export default function Index() {
           <Text id="coinText" style={styles.coinText}>{amount ? amount.total_amount.toLocaleString('de-CH') : ''}</Text>
         </View>
       </LinearGradient>
-      <ScrollView contentContainerStyle={styles.subjectSelection}>
-        <ImageBackground source={workspaceImage} resizeMode="cover" style={styles.workspace}>
-          <Link href="/math" >
-            <Image source={require('@/assets/images/mathe-button.png')} resizeMode="contain" style={styles.subjectButton} />
-          </Link>
-          <Link href="/time" >
-            <Image source={require('@/assets/images/time-button.png')} resizeMode="contain" style={styles.subjectButton} />
-          </Link>
-          <Link href="/german" >
-            <Image source={require('@/assets/images/german-button.png')} resizeMode="contain" style={styles.subjectButton} />
-          </Link>
-          <Link href="/english" >
-            <Image source={require('@/assets/images/english-button.png')} resizeMode="contain" style={styles.subjectButton} />
-          </Link>
-
+      <ScrollView contentContainerStyle={styles.subjectSelectionContainer}>
+        <ImageBackground source={workspaceImage} resizeMode="cover" style={{ flex: 1 }}>
+          <View style={styles.workspace}>
+            <Link href="/math" >
+              <Image source={require('@/assets/images/mathe-button.png')} resizeMode="contain" style={styles.subjectButton} />
+            </Link>
+            <Link href="/time" >
+              <Image source={require('@/assets/images/time-button.png')} resizeMode="contain" style={styles.subjectButton} />
+            </Link>
+            <Link href="/german" >
+              <Image source={require('@/assets/images/german-button.png')} resizeMode="contain" style={styles.subjectButton} />
+            </Link>
+            <Link href="/english" >
+              <Image source={require('@/assets/images/english-button.png')} resizeMode="contain" style={styles.subjectButton} />
+            </Link>
+          </View>
         </ImageBackground>
       </ScrollView>
     </SafeAreaView>

@@ -1,27 +1,35 @@
-import { createStyles } from '@/assets/styles/styles';
-import HeaderSubject from '@/components/HeaderSubject';
-import Watch from '@/components/Watch';
-import useTheme from '@/hooks/useTheme';
-import React from 'react';
-import { ImageBackground } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { createStyles } from "@/assets/styles/styles";
+import useTheme from "@/hooks/useTheme";
+import { LinearGradient } from "expo-linear-gradient";
+import { Link } from "expo-router";
+import { Image, ImageBackground, ScrollView, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+const workspaceImage = require('@/assets/images/workspace.png');
 
-const tableImage = require('@/assets/images/table.png');
-const timeButton = require('@/assets/images/time-button.png');
 
-const time = () => {
+export default function TimeSubject() {
 
-    const { timeTheme, colors } = useTheme();
+    const { timeTheme } = useTheme();
     const styles = createStyles();
 
     return (
         <SafeAreaView style={styles.containerLayout} edges={[]}>
-            <HeaderSubject theme={timeTheme} styles={styles} image={timeButton} />
-            <ImageBackground source={tableImage} resizeMode="cover" style={styles.subjectWorkspace}>
-                <Watch />
-            </ImageBackground>
-        </SafeAreaView>
-    )
-}
+            <LinearGradient colors={timeTheme.gradients.header}>
+                <View style={styles.headerSubject}>
+                    <Image style={styles.subjectImage} resizeMode="contain" source={require('@/assets/images/time-button.png')} />
+                </View>
+            </LinearGradient>
 
-export default time
+            <ScrollView contentContainerStyle={styles.subjectSelectionContainer}>
+                <ImageBackground source={workspaceImage} resizeMode="cover" style={{ flex: 1 }}>
+                    <View style={[styles.workspace, styles.workspaceCentered]}>
+                        <Link href="/time/analogtodigital" >
+                            <Image source={require('@/assets/images/time-button.png')} resizeMode="contain" style={styles.subjectButton} />
+                        </Link>
+
+                    </View>
+                </ImageBackground>
+            </ScrollView>
+        </SafeAreaView>
+    );
+}

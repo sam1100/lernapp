@@ -17,7 +17,7 @@ const ProgressBar = ({ progressParts, doneCount, totalCount }: { progressParts: 
     return (
         <View id='progressContainer' style={styles.progressContainer}>
             <View id='progressBarContainer' style={styles.progressBarContainer}>
-                <View id='progressBar' style={[styles.progressBar, styles.progressBarMathSubject]}>
+                <View id='progressBar' style={styles.progressBar}>
                     {progressParts?.map((part, index) => (
                         <LinearGradient
                             key={index}

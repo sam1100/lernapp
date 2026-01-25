@@ -2,7 +2,7 @@ import { createStyles } from "@/assets/styles/styles";
 import useTheme from "@/hooks/useTheme";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link } from "expo-router";
-import { Image, ImageBackground, View } from "react-native";
+import { Image, ImageBackground, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 const workspaceImage = require('@/assets/images/workspace.png');
 
@@ -20,23 +20,25 @@ export default function MathSubject() {
                 </View>
             </LinearGradient>
 
-            <View style={styles.workspace}>
-                <ImageBackground source={workspaceImage} resizeMode="cover" style={styles.workspace}>
-                    <Link href="/math/multiplication" >
-                        <Image source={require('@/assets/images/multiplication.png')} resizeMode="contain" style={styles.subjectButton} />
-                    </Link>
-                    <Link href="/math/division" >
-                        <Image source={require('@/assets/images/division.png')} resizeMode="contain" style={styles.subjectButton} />
-                    </Link>
-                    <Link href="/math/multiplication" >
-                        <Image source={require('@/assets/images/addition.png')} resizeMode="contain" style={styles.subjectButton} />
-                    </Link>
-                    <Link href="/math/multiplication" >
-                        <Image source={require('@/assets/images/subtraction.png')} resizeMode="contain" style={styles.subjectButton} />
-                    </Link>
+            <ScrollView contentContainerStyle={styles.subjectSelectionContainer}>
+                <ImageBackground source={workspaceImage} resizeMode="cover" style={{ flex: 1 }}>
+                    <View style={[styles.workspace, styles.workspaceCentered]}>
+                        <Link href="/math/multiplication" >
+                            <Image source={require('@/assets/images/multiplication.png')} resizeMode="contain" style={styles.subjectButton} />
+                        </Link>
+                        <Link href="/math/division" >
+                            <Image source={require('@/assets/images/division.png')} resizeMode="contain" style={styles.subjectButton} />
+                        </Link>
+                        <Link href="/math/multiplication" >
+                            <Image source={require('@/assets/images/addition.png')} resizeMode="contain" style={styles.subjectButton} />
+                        </Link>
+                        <Link href="/math/multiplication" >
+                            <Image source={require('@/assets/images/subtraction.png')} resizeMode="contain" style={styles.subjectButton} />
+                        </Link>
 
+                    </View>
                 </ImageBackground>
-            </View>
+            </ScrollView>
         </SafeAreaView>
     );
 }

@@ -1,3 +1,8 @@
+export interface ComprehensiveCheckAnswerResult {
+    isCorrect: boolean;
+    details: any;
+}
+
 export abstract class ExerciseService<T> {
     protected exercises: T[] = [];
     protected currentIndex: number = -1;
@@ -19,7 +24,11 @@ export abstract class ExerciseService<T> {
             return this.exercises[this.currentIndex];
         }
     }
-    protected abstract getNextIndex(): number;
+
+    protected getNextIndex(): number {
+        return Math.floor(Math.random() * this.exercises.length);
+    }
+
 
     hasNext(): boolean {
         return this.exercises.length > 1; // Solange die letzte / aktuelle Aufgabe nicht entfernt wurde, ist length >= 1. Daher muss auf > 1 geprüft werden.
@@ -33,6 +42,16 @@ export abstract class ExerciseService<T> {
 
         return isCorrect;
     }
+
+    comprehensiveCheckAnswer(answer: any): ComprehensiveCheckAnswerResult {
+        const comprehensiveCheckAnswerResult: ComprehensiveCheckAnswerResult = this.basicComprehensiveCheckAnswer(answer);
+        if (comprehensiveCheckAnswerResult.isCorrect)
+            this.checkAnswer(comprehensiveCheckAnswerResult.isCorrect);
+
+        return comprehensiveCheckAnswerResult;
+    }
+
+    abstract basicComprehensiveCheckAnswer(answer: any): ComprehensiveCheckAnswerResult;
 
     protected abstract basicCheckAnswer(answer: any): boolean;
 

@@ -35,8 +35,4 @@ export class MathDivisionService extends ExerciseService<MathDivisionExercise> {
         let exercise: MathDivisionExercise = this.exercises[this.currentIndex];
         return (exercise!.dividend / exercise!.divisor) === answer;
     }
-
-    protected getNextIndex(): number {
-        return Math.floor(Math.random() * this.exercises.length);
-    }
 }

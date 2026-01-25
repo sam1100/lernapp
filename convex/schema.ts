@@ -23,6 +23,11 @@ export default defineSchema({
         repetitions: v.number(),
         type: v.union(...getEnumValues(GERMAN_WORD_TYPES).map(v.literal)),
     }),
+    time: defineTable({
+        analog_digital_repetitions: v.number(),
+        digital_analog_repetitions: v.number(),
+        verbally_repetitions: v.number(),
+    }),
     coins: defineTable({
         amount: v.number(), // Ist negative, wenn Nico Muenzen ausgibt
         total_amount: v.number(),

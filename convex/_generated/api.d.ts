@@ -13,6 +13,7 @@ import type * as enums from "../enums.js";
 import type * as german from "../german.js";
 import type * as math from "../math.js";
 import type * as rewardsConfig from "../rewardsConfig.js";
+import type * as time from "../time.js";
 
 import type {
   ApiFromModules,
@@ -26,6 +27,7 @@ declare const fullApi: ApiFromModules<{
   german: typeof german;
   math: typeof math;
   rewardsConfig: typeof rewardsConfig;
+  time: typeof time;
 }>;
 
 /**

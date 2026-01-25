@@ -21,13 +21,13 @@ const mathButton = require('@/assets/images/mathe-button.png');
 type MathDivision = Doc<"math_division">;
 
 const MathDivisionSubject = () => {
-    const { mathTheme, colors } = useTheme();
     const [exercise, setExercise] = useState<MathDivisionExercise | null>(null);
     const [answer, setAnswer] = useState<string | null>(null);
     const [result, setResult] = useState<string | null>(null);
     const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean | null>(null);
     const [progressParts, setProgressParts] = useState<ProgressPart[]>([]);
 
+    const { mathTheme, colors } = useTheme();
     const styles = createStyles();
     const mathServiceRef = useRef<MathDivisionService | null>(null);
     const inputRef = useRef<TextInput>(null);
