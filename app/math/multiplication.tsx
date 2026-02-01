@@ -1,4 +1,4 @@
-import { createStyles } from '@/assets/styles/styles';
+import { colorDefinitions, createStyles } from '@/assets/styles/styles';
 import ExerciseDone from '@/components/ExerciseDone';
 import HeaderSubject from '@/components/HeaderSubject';
 import LoadingSpinner from '@/components/LoadingSpinner';
@@ -99,7 +99,7 @@ const MathMultiplicationSubject = () => {
         <SafeAreaView style={styles.containerLayout} edges={[]}>
             <HeaderSubject theme={mathTheme} styles={styles} image={multiplicationButton} progressParts={progressParts} doneCount={doneCount} totalCount={totalCount} />
             <ImageBackground source={tableImage} resizeMode="cover" style={styles.subjectWorkspace}>
-                {mathServiceRef.current?.hasNext() ? (
+                {mathServiceRef.current === null || mathServiceRef.current?.hasNext() ? (
                     <>
                         <View id='exerciseContainer' style={[styles.horizontalContainer, styles.exerciseContainer]}>
                             <Text style={styles.exercise}>{exercise?.multiplier1} x {exercise?.multiplier2}</Text>
@@ -118,7 +118,7 @@ const MathMultiplicationSubject = () => {
                                 returnKeyType="done"
                                 submitBehavior="blurAndSubmit"
                             />
-                            {isAnswerCorrect !== null && (isAnswerCorrect ? <Ionicons name='checkmark-circle-outline' color="green" size={52} /> : <Ionicons name='close-circle-outline' color="#C00000" size={52} />)}
+                            {isAnswerCorrect !== null && (isAnswerCorrect ? <Ionicons name='checkmark-circle-outline' color={colorDefinitions.correctAnswer} size={52} /> : <Ionicons name='close-circle-outline' color={colorDefinitions.wrongAnswer} size={52} />)}
                         </View>
                         <View id='buttonContainer' style={styles.buttonContainer}>
                             {isAnswerCorrect !== null && (!isAnswerCorrect ? <TouchableOpacity onPress={() => { nextExercise() }}><Image source={nextImage} resizeMode='contain' style={styles.subjectButton} /></TouchableOpacity> : null)}

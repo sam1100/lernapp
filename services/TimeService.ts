@@ -17,7 +17,8 @@ export abstract class TimeService<T extends TimeExercise, R extends TimeResult> 
         super();
         this.init(repetitions);
     }
-    init(repetitions: number): void {
+
+    protected init(repetitions: number): void {
         this.exercises = [];
 
         for (let i = 0; i < repetitions; i++) {

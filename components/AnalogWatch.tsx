@@ -31,18 +31,27 @@ const AnalogWatch = ({ timeParts, editable }: { timeParts?: { hours: number; min
     };
 
     const minutesTurnRight = () => {
+        const minutesBefore = minutes;
         setMinutes((prevMinutes) => (prevMinutes === 60 - MINUTE_PRECISION ? 0 : prevMinutes! + MINUTE_PRECISION));
+
+        if (minutesBefore === 60 - MINUTE_PRECISION)
+            hoursTurnRight();
+
     };
 
     const minutesTurnLeft = () => {
+        const minutesBefore = minutes;
         setMinutes((prevMinutes) => (prevMinutes === 0 ? 60 - MINUTE_PRECISION : prevMinutes! - MINUTE_PRECISION));
+
+        if (minutesBefore === 0)
+            hoursTurnLeft();
     };
 
     return (
         <View id="watchNavigationContainer" style={styles.watchNavigationContainer}>
             {editable &&
                 <View id="hourContainer" style={styles.clockNavigationContainer}>
-                    <Text style={styles.clockNavigationText}>Stunden:</Text>
+                    <Text style={styles.clockNavigationText}>Stunden</Text>
                     <TouchableOpacity onPress={hoursTurnRight}>
                         <Image source={turnRightButton} resizeMode="contain" style={styles.clockNavigationButton} />
                     </TouchableOpacity>
@@ -96,7 +105,7 @@ const AnalogWatch = ({ timeParts, editable }: { timeParts?: { hours: number; min
             </View>
             {editable &&
                 <View id="minutesContainer" style={styles.clockNavigationContainer}>
-                    <Text style={styles.clockNavigationText}>Minuten:</Text>
+                    <Text style={styles.clockNavigationText}>Minuten</Text>
                     <TouchableOpacity onPress={minutesTurnRight}>
                         <Image source={turnRightButton} resizeMode="contain" style={styles.clockNavigationButton} />
                     </TouchableOpacity>

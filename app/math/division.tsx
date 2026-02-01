@@ -95,7 +95,7 @@ const MathDivisionSubject = () => {
         <SafeAreaView style={styles.containerLayout} edges={[]}>
             <HeaderSubject theme={mathTheme} styles={styles} image={mathButton} progressParts={progressParts} doneCount={doneCount} totalCount={totalCount} />
             <ImageBackground source={tableImage} resizeMode="cover" style={styles.subjectWorkspace}>
-                {mathServiceRef.current?.hasNext() ? (
+                {mathServiceRef.current === null || mathServiceRef.current?.hasNext() ? (
                     <>
                         <View id='exerciseContainer' style={[styles.horizontalContainer, styles.exerciseContainer]}>
                             <Text style={styles.exercise}>{exercise?.dividend} ÷ {exercise?.divisor}</Text>

@@ -4,7 +4,7 @@ import { TextInput } from 'react-native';
 //const regex = new RegExp("^([0-9]{1,2}):([0-9]{1,2})$");
 
 
-const DigitalWatch = ({ initialTimeValue, editable, onSubmit, ref }: { initialTimeValue: string, editable?: boolean, onSubmit: (input: number) => void, ref?: React.RefObject<TextInput | null> }) => {
+const DigitalWatch = ({ initialTimeValue, editable, onSubmit, ref, isResultCorrect }: { initialTimeValue: string, editable?: boolean, onSubmit?: (input: number) => void, ref?: React.RefObject<TextInput | null>, isResultCorrect?: boolean },) => {
 
     const [timeValue, setTimeValue] = React.useState<string>(initialTimeValue);
     const styles = createStyles();
@@ -40,12 +40,14 @@ const DigitalWatch = ({ initialTimeValue, editable, onSubmit, ref }: { initialTi
         }
 
         const timeValue = hours + minutes / 60;
-        onSubmit(timeValue);
+        onSubmit?.(timeValue);
     }
+
+    console.log(`DigitalWatch render: isResultCorrect: ${JSON.stringify(isResultCorrect)} / timeValue: ${timeValue} / editable: ${editable}`);
 
     return (
         <TextInput
-            style={[styles.digitalWatchInput, !editable && styles.digitalWatchInputDisabled]}
+            style={[styles.digitalWatchInput, !editable && styles.digitalWatchInputDisabled, isResultCorrect === true ? styles.correctDigitalAnswer : isResultCorrect === false ? styles.wrongDigitalAnswer : null]}
             placeholder=':'
             value={timeValue}
             maxLength={5}

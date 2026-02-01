@@ -1,8 +1,16 @@
 import { StyleSheet } from "react-native";
 
 const fontDefinitions = {
-    standardSize: 16,
-    fontFamily: 'ravie',
+    sizeStandard: 16,
+    fontFamilyStandard: 'FreckleFace-Regular',
+    fontFamilyDigital: 'digital-7',
+};
+
+export const colorDefinitions = {
+    correctAnswer: '#549E24',
+    correctAnswerBackground: 'rgba(34, 197, 94, 0.2)',
+    wrongAnswer: '#C00000',
+    wrongAnswerBackground: 'rgba(239, 68, 68, 0.2)',
 };
 
 export const createStyles = () => {
@@ -77,6 +85,7 @@ export const createStyles = () => {
         },
         subjectWorkspace: {
             flex: 1,
+            minHeight: "100%",
             width: "100%",
             justifyContent: "flex-start",
             alignItems: "center",
@@ -115,11 +124,11 @@ export const createStyles = () => {
             paddingTop: 20,
             paddingBottom: 0,
             fontSize: 30,
-            fontWeight: "700",
+            fontFamily: fontDefinitions.fontFamilyStandard,
             color: "#1e293b",
         },
         exerciseWrongAnswer: {
-            color: "#C00000",
+            color: colorDefinitions.wrongAnswer,
         },
         inputContainer: {
             marginTop: 20,
@@ -133,7 +142,7 @@ export const createStyles = () => {
             paddingHorizontal: 20,
             paddingVertical: 10,
             fontSize: 26,
-            fontWeight: "bold",
+            fontFamily: fontDefinitions.fontFamilyStandard,
             textAlign: "center",
         },
         exerciseInputMathSubject: {
@@ -170,15 +179,15 @@ export const createStyles = () => {
             height: "100%",
         },
         progressText: {
-            fontSize: 16,
-            fontWeight: "700",
+            fontSize: fontDefinitions.sizeStandard,
+            fontFamily: fontDefinitions.fontFamilyStandard,
             minWidth: 40,
             textAlign: "right",
             color: "#10b981",
         },
         progressTextMathSubject: {
-            fontSize: 16,
-            fontWeight: "bold",
+            fontSize: fontDefinitions.sizeStandard,
+            fontFamily: fontDefinitions.fontFamilyStandard,
             color: '#5f3419'
         },
         loadingContainer: {
@@ -188,8 +197,8 @@ export const createStyles = () => {
         },
         loadingText: {
             marginTop: 20,
-            fontSize: 18,
-            fontWeight: "500",
+            fontSize: fontDefinitions.sizeStandard,
+            fontFamily: fontDefinitions.fontFamilyStandard,
             color: "#1e293b",
         },
         exerciseDoneContainer: {
@@ -218,6 +227,7 @@ export const createStyles = () => {
         },
 
         watchNavigationContainer: {
+            width: "100%",
             flexDirection: "row",
             justifyContent: "center",
             alignItems: "center",
@@ -234,24 +244,35 @@ export const createStyles = () => {
             marginTop: 10,
         },
         clockNavigationText: {
-            fontFamily: 'Comfortaa',
+            fontFamily: fontDefinitions.fontFamilyStandard,
             fontSize: 16,
-            fontWeight: "bold",
             color: "#333",
         },
         clockWrapper: {
-            height: 200,
+            height: 150,
             flexGrow: 2,
         },
+
+
+        analogWatchContainer: {
+            width: "100%",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 0,
+            paddingTop: 10,
+            marginVertical: 10,
+        },
+
         digitalWatchInput: {
-            minWidth: 150,
+            width: "100%",
             borderWidth: 2,
             borderRadius: 10,
-            borderColor: "#cccccc",
+            borderColor: "#bd8055",
             fontSize: 30,
-            fontFamily: 'digital-7',
+            fontFamily: fontDefinitions.fontFamilyDigital,
             textAlign: "center",
-            lineHeight: 30
+            lineHeight: 30,
+            alignSelf: "center",
         },
         digitalWatchInputDisabled: {
             backgroundColor: "#f3f4f6",
@@ -262,28 +283,37 @@ export const createStyles = () => {
             flexDirection: "row",
             alignItems: "center",
             gap: 20,
-
             padding: 0,
-            marginVertical: 10,
+            paddingVertical: 5,
+            paddingHorizontal: 20,
         },
 
-        watchExceciseNavigationElement: {
-            width: "20%",
-            minHeight: fontDefinitions.standardSize,
-            fontSize: fontDefinitions.standardSize,
-            fontWeight: "bold",
-            fontFamily: "FreckleFace-Regular",
-            textAlign: "right",
+        digitalWatchElement: {
+            flexGrow: 1,
             paddingHorizontal: 0,
         },
-        watchExcerciseAnswerCheckContainer: {
+        digitalWatchAmPm: {
+            fontSize: fontDefinitions.sizeStandard,
+            fontFamily: fontDefinitions.fontFamilyStandard,
+            textAlign: "left",
+        },
+
+        correctDigitalAnswer: {
+            borderColor: colorDefinitions.correctAnswer,
+            backgroundColor: colorDefinitions.correctAnswerBackground,
+            borderWidth: 3,
+        },
+        wrongDigitalAnswer: {
+            borderColor: colorDefinitions.wrongAnswer,
+            backgroundColor: colorDefinitions.wrongAnswerBackground,
+            borderWidth: 3,
+        },
+
+        watchExerciseAnswerCheckContainer: {
             width: "20%",
             flex: 1,
             alignItems: "flex-start",
             justifyContent: "center",
-        },
-        watchExceciseInputElement: {
-            flexGrow: 1,
         },
 
         coinContainer: {
@@ -295,8 +325,7 @@ export const createStyles = () => {
         coinText: {
             marginTop: 10,
             fontSize: 30,
-            fontWeight: "bold",
-            fontFamily: 'digital-7',
+            fontFamily: fontDefinitions.fontFamilyStandard,
             color: "#7c3401",
         },
         coinWrapper: {

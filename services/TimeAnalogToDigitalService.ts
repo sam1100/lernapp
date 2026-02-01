@@ -43,9 +43,7 @@ export class TimeAnalogToDigitalService extends TimeService<TimeAnalogToDigitalE
 
         return {
             isCorrect: digitalAmCorrect && digitalPmCorrect,
-            details: {
-                digitalAm: result,
-            }
+            details: result
         }
     }
 

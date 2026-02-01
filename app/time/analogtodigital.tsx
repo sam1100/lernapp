@@ -9,7 +9,6 @@ import { COIN_REASONS } from '@/convex/enums';
 import useTheme from '@/hooks/useTheme';
 import { ComprehensiveCheckAnswerResult } from '@/services/ExerciseService';
 import { TimeAnalogToDigitalExercise, TimeAnalogToDigitalResult, TimeAnalogToDigitalService } from '@/services/TimeAnalogToDigitalService';
-import { Ionicons } from '@expo/vector-icons';
 import { useQuery } from 'convex/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { Image, ImageBackground, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -24,7 +23,7 @@ const AnalogToDigital = () => {
 
     const [exercise, setExercise] = useState<TimeAnalogToDigitalExercise | null>(null);
     const [answer, setAnswer] = useState<TimeAnalogToDigitalResult | null>(null);
-    const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean | null>(null);
+    const [answerResult, setAnswerResult] = useState<ComprehensiveCheckAnswerResult | null>(null);
     const [progressParts, setProgressParts] = useState<ProgressPart[]>([]);
 
     const { timeTheme, colors } = useTheme();
@@ -40,40 +39,33 @@ const AnalogToDigital = () => {
         if (!timeConfig) return;
 
         timeServiceRef.current = new TimeAnalogToDigitalService(timeConfig);
-        setIsAnswerCorrect(null);
-
-        const firstExercise = timeServiceRef.current.getNextExercise();
-        setExercise(firstExercise!);
+        nextExercise();
         setProgressParts([]);
     }, [timeConfig]);
 
     const nextExercise = () => {
-        setIsAnswerCorrect(null);
+        setAnswerResult(null);
         setAnswer(null);
         if (timeServiceRef.current?.hasNext()) {
             const next = timeServiceRef.current.getNextExercise();
             setExercise(next!);
-        } else
+        } else {
+            timeServiceRef.current?.getNextExercise();
             setExercise(null);
+        }
     }
 
     const checkAnswer = (): void => {
+
         if (!!exercise && !!timeServiceRef.current && !!answer) {
 
             console.log("Überprüfe Antwort:", answer);
 
             const answerResult: ComprehensiveCheckAnswerResult = timeServiceRef.current.comprehensiveCheckAnswer(answer);
-            setIsAnswerCorrect(answerResult.isCorrect);
+            setAnswerResult(answerResult);
 
             addProgressPart(answerResult.isCorrect);
-            waitAndShowNextExercise();
         }
-    }
-
-    const waitAndShowNextExercise = () => {
-        setTimeout(() => {
-            nextExercise();
-        }, 2000);
     }
 
     const addProgressPart = (correct: boolean) => {
@@ -103,44 +95,49 @@ const AnalogToDigital = () => {
     const totalCount = timeServiceRef.current?.getTotalExercisesCount() ?? 0;
     const doneCount = timeServiceRef.current?.getTotalAnswersCount() ?? 0;
 
-    const answerCorrectnessIndicator = (isAnswerCorrect: boolean | null, styles: any, colors: any) => {
-        if (isAnswerCorrect === null)
-            return <View id='placeholder' style={styles.watchExceciseNavigationElement} />;
-        else if (isAnswerCorrect === true)
-            return <View style={styles.watchExcerciseAnswerCheckContainer}><Ionicons name='checkmark-circle-outline' color="green" size={52} /></View>;
-        else
-            return <View style={styles.watchExcerciseAnswerCheckContainer}><Ionicons name='close-circle-outline' color="#C00000" size={52} /></View>;
-    }
+    //    console.log(`TimeServiceRef: ${timeServiceRef.current} / hasNext: ${timeServiceRef.current?.hasNext()} `);
 
     return (
         <SafeAreaView style={{ flex: 1 }} edges={[]}>
-            <HeaderSubject theme={timeTheme} styles={styles} image={timeButton} progressParts={progressParts} doneCount={doneCount} totalCount={totalCount} />
+            <KeyboardAvoidingView
+                behavior={'position'}
+                keyboardVerticalOffset={-160}
+                style={styles.containerLayout}
+            >
+                <HeaderSubject theme={timeTheme} styles={styles} image={timeButton} progressParts={progressParts} doneCount={doneCount} totalCount={totalCount} />
 
-            <ImageBackground source={tableImage} resizeMode="cover" style={styles.subjectWorkspace}>
-                {timeServiceRef.current?.hasNext() ? (
-                    <KeyboardAvoidingView
-                        behavior={'position'}
-                        keyboardVerticalOffset={55}
-                        style={styles.containerLayout}
-                    >
-                        <ScrollView scrollEnabled={true} keyboardShouldPersistTaps="handled">
-                            <Watch timeParts={timeServiceRef.current?.getTimeParts(exercise?.analog || 0)} editable={false} />
-                            <View id='digitalWatchesContainerAM' style={styles.digitalWatchesContainer}>
-                                <Text style={styles.watchExceciseNavigationElement}>AM:</Text>
-                                <View id='digitalWatchWrapper' style={styles.watchExceciseInputElement}>
+                <ImageBackground id="subjectWorkspace" source={tableImage} resizeMode="cover" style={styles.subjectWorkspace}>
+                    {timeServiceRef.current === null || exercise != null ? (
+                        <ScrollView id="scrollView" scrollEnabled={true} keyboardShouldPersistTaps="handled" style={{ width: "100%" }}>
+                            <View id='analogWatchContainer' style={styles.analogWatchContainer}>
+                                <Watch timeParts={timeServiceRef.current?.getTimeParts(exercise?.analog || 0)} editable={false} />
+                            </View>
+
+                            <View id='ampmContainer' style={styles.digitalWatchesContainer}>
+                                <Text style={[styles.digitalWatchElement, styles.digitalWatchAmPm]}>AM</Text>
+                                <Text style={[styles.digitalWatchElement, styles.digitalWatchAmPm]}>PM</Text>
+                            </View>
+
+                            <View id='digitalWatchesContainerResult' style={styles.digitalWatchesContainer}>
+                                <View id='digitalWatchWrapperAM' style={styles.digitalWatchElement}>
                                     <DigitalWatch initialTimeValue={(answer && timeServiceRef.current) ? timeServiceRef.current.getTimeString(answer?.digitalAm ?? null) : ""} editable={true} onSubmit={onSubmitAm} ref={refDigitalInputAM} />
                                 </View>
-                                {answerCorrectnessIndicator(isAnswerCorrect, styles, colors)}
-                            </View>
-                            <View id='digitalWatchesContainerPM' style={styles.digitalWatchesContainer}>
-                                <Text style={styles.watchExceciseNavigationElement}>PM:</Text>
-                                <View id='digitalWatchWrapper' style={styles.watchExceciseInputElement}>
+                                <View id='digitalWatchWrapperPM' style={styles.digitalWatchElement}>
                                     <DigitalWatch initialTimeValue={(answer && timeServiceRef.current) ? timeServiceRef.current.getTimeString(answer?.digitalPm ?? null) : ""} editable={true} onSubmit={onSubmitPm} ref={refDigitalInputPM} />
                                 </View>
-                                {answerCorrectnessIndicator(isAnswerCorrect, styles, colors)}
                             </View>
+                            {answerResult !== null ? (
+                                <View id='digitalWatchesContainerCorrection' style={styles.digitalWatchesContainer}>
+                                    <View id='digitalWatchWrapperAMCorrection' style={styles.digitalWatchElement}>
+                                        <DigitalWatch initialTimeValue={(exercise && timeServiceRef.current) ? timeServiceRef.current.getTimeString(exercise.result ?? null) : ""} editable={false} isResultCorrect={answerResult?.details.digitalAm} />
+                                    </View>
+                                    <View id='digitalWatchWrapperPMCorrection' style={styles.digitalWatchElement}>
+                                        <DigitalWatch initialTimeValue={(exercise && timeServiceRef.current) ? timeServiceRef.current.getTimeString(exercise.result ? exercise.result + 12 : null) : ""} editable={false} isResultCorrect={answerResult?.details.digitalPm} />
+                                    </View>
+                                </View>
+                            ) : null}
                             <View style={styles.buttonContainer} >
-                                {isAnswerCorrect === null ? (
+                                {answerResult === null ? (
                                     <TouchableOpacity onPress={() => { checkAnswer() }}><Image source={checkAnswerButton} resizeMode='contain' style={styles.subjectButton} /></TouchableOpacity>
                                 ) : (
                                     <TouchableOpacity onPress={() => { nextExercise() }}><Image source={nextButton} resizeMode='contain' style={styles.subjectButton} /></TouchableOpacity>
@@ -148,11 +145,11 @@ const AnalogToDigital = () => {
                                 }
                             </View>
                         </ScrollView>
-                    </KeyboardAvoidingView>
-                ) : (
-                    <ExerciseDone correctAnswerCount={timeServiceRef.current?.getCorrectAnswersCount() ?? 0} wrongAnswerCount={timeServiceRef.current?.getWrongAnswersCount() ?? 0} rewardCoins={10} reason={COIN_REASONS.TIME_ANALOG_DIGITAL} styles={styles} />
-                )}
-            </ImageBackground>
+                    ) : (
+                        <ExerciseDone correctAnswerCount={timeServiceRef.current?.getCorrectAnswersCount() ?? 0} wrongAnswerCount={timeServiceRef.current?.getWrongAnswersCount() ?? 0} rewardCoins={10} reason={COIN_REASONS.TIME_ANALOG_DIGITAL} styles={styles} />
+                    )}
+                </ImageBackground>
+            </KeyboardAvoidingView>
         </SafeAreaView>
 
     )
