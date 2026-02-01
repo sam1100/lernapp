@@ -2,7 +2,7 @@ import { createStyles } from '@/assets/styles/styles';
 import ExerciseDone from '@/components/ExerciseDone';
 import HeaderSubject from '@/components/HeaderSubject';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import ProgressBar, { ProgressPart } from '@/components/ProgressBar';
+import { ProgressPart } from '@/components/ProgressBar';
 import { api } from "@/convex/_generated/api";
 import { Doc } from "@/convex/_generated/dataModel";
 import { COIN_REASONS } from "@/convex/enums";
@@ -93,11 +93,10 @@ const MathDivisionSubject = () => {
 
     return (
         <SafeAreaView style={styles.containerLayout} edges={[]}>
-            <HeaderSubject theme={mathTheme} styles={styles} image={mathButton} />
+            <HeaderSubject theme={mathTheme} styles={styles} image={mathButton} progressParts={progressParts} doneCount={doneCount} totalCount={totalCount} />
             <ImageBackground source={tableImage} resizeMode="cover" style={styles.subjectWorkspace}>
                 {mathServiceRef.current?.hasNext() ? (
                     <>
-                        <ProgressBar progressParts={progressParts} doneCount={doneCount} totalCount={totalCount} />
                         <View id='exerciseContainer' style={[styles.horizontalContainer, styles.exerciseContainer]}>
                             <Text style={styles.exercise}>{exercise?.dividend} ÷ {exercise?.divisor}</Text>
                             <Text style={[styles.exercise, styles.exerciseWrongAnswer]}>{answer}</Text>

@@ -1,5 +1,10 @@
 import { StyleSheet } from "react-native";
 
+const fontDefinitions = {
+    standardSize: 16,
+    fontFamily: 'ravie',
+};
+
 export const createStyles = () => {
     const styles = StyleSheet.create({
         containerLayout: {
@@ -21,15 +26,15 @@ export const createStyles = () => {
             gap: 20,
         },
         headerSubject: {
-            height: 120,
             width: "100%",
             justifyContent: "center",
             alignItems: "center",
-            paddingHorizontal: 24,
-            paddingVertical: 32,
-            paddingBottom: 24,
-            borderBottomWidth: 1,
-            borderBottomColor: 'rgb(100,100,100)',
+            paddingHorizontal: 20,
+            paddingVertical: 20,
+        },
+        headerSubjectGradientBorder: {
+            width: "100%",
+            height: 2,
         },
         titleImage: {
             height: 180,
@@ -56,7 +61,7 @@ export const createStyles = () => {
             justifyContent: "flex-start",
             alignItems: "center",
             alignContent: "center",
-            paddingTop: 30,
+            paddingTop: 50,
             gap: 15,
         },
         workspaceCentered: {
@@ -76,6 +81,7 @@ export const createStyles = () => {
             justifyContent: "flex-start",
             alignItems: "center",
             alignContent: "center",
+            overflow: "hidden",
         },
         buttonContainer: {
             flexDirection: "row",
@@ -88,10 +94,10 @@ export const createStyles = () => {
             height: 75,
         },
         subjectButton: {
-            marginTop: 50,
-            marginBottom: 50,
+            marginTop: 0,
+            marginBottom: 0,
             width: 200,
-            height: 75,
+            height: 75
         },
         okNokButton: {
             marginTop: 50,
@@ -144,8 +150,8 @@ export const createStyles = () => {
             gap: 0,
         },
         progressContainer: {
-            marginTop: 30,
-            width: "80%",
+            marginTop: 20,
+            width: "95%",
         },
         progressBarContainer: {
             flexDirection: "row",
@@ -156,7 +162,7 @@ export const createStyles = () => {
             flex: 1,
             height: 20,
             overflow: "hidden",
-            backgroundColor: "#d5a47c",
+            backgroundColor: "rgba(200,200,200,0.6)",
             borderRadius: 10,
         },
         progressFill: {
@@ -215,7 +221,7 @@ export const createStyles = () => {
             flexDirection: "row",
             justifyContent: "center",
             alignItems: "center",
-            paddingTop: 0,
+            paddingTop: 10,
         },
         clockNavigationContainer: {
             flex: 1,
@@ -245,6 +251,7 @@ export const createStyles = () => {
             fontSize: 30,
             fontFamily: 'digital-7',
             textAlign: "center",
+            lineHeight: 30
         },
         digitalWatchInputDisabled: {
             backgroundColor: "#f3f4f6",
@@ -255,14 +262,25 @@ export const createStyles = () => {
             flexDirection: "row",
             alignItems: "center",
             gap: 20,
+
             padding: 0,
-            margin: 0,
+            marginVertical: 10,
         },
 
         watchExceciseNavigationElement: {
             width: "20%",
-            minHeight: 10,
-            paddingHorizontal: 20,
+            minHeight: fontDefinitions.standardSize,
+            fontSize: fontDefinitions.standardSize,
+            fontWeight: "bold",
+            fontFamily: "FreckleFace-Regular",
+            textAlign: "right",
+            paddingHorizontal: 0,
+        },
+        watchExcerciseAnswerCheckContainer: {
+            width: "20%",
+            flex: 1,
+            alignItems: "flex-start",
+            justifyContent: "center",
         },
         watchExceciseInputElement: {
             flexGrow: 1,
@@ -278,7 +296,7 @@ export const createStyles = () => {
             marginTop: 10,
             fontSize: 30,
             fontWeight: "bold",
-            //            fontFamily: 'Whale I Tried',
+            fontFamily: 'digital-7',
             color: "#7c3401",
         },
         coinWrapper: {

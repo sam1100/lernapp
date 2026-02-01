@@ -2,7 +2,7 @@ import { createStyles } from "@/assets/styles/styles";
 import ExerciseDone from "@/components/ExerciseDone";
 import HeaderSubject from "@/components/HeaderSubject";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import ProgressBar, { ProgressPart } from "@/components/ProgressBar";
+import { ProgressPart } from "@/components/ProgressBar";
 import { Doc } from "@/convex/_generated/dataModel";
 import useTheme from "@/hooks/useTheme";
 import { WordExercise, WordsService } from "@/services/WordsService";
@@ -111,8 +111,6 @@ export default function GermanWordsSubject({ headerImage, words, reason }: { hea
             return <LoadingSpinner />;
         if (exercise != null)
             return <>
-                <ProgressBar progressParts={progressParts} doneCount={doneCount} totalCount={totalCount} />
-
                 <View >
                     {revealed ? (
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -145,7 +143,7 @@ export default function GermanWordsSubject({ headerImage, words, reason }: { hea
 
     return (
         <SafeAreaView style={styles.containerLayout} edges={[]}>
-            <HeaderSubject theme={germanTheme} styles={styles} image={headerImage} />
+            <HeaderSubject theme={germanTheme} styles={styles} image={headerImage} progressParts={progressParts} doneCount={doneCount} totalCount={totalCount} />
             <ImageBackground source={tableImage} resizeMode="cover" style={styles.subjectWorkspace}>
                 {renderExcercise()}
             </ImageBackground>

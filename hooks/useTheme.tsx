@@ -18,6 +18,7 @@ export interface SubjetTheme {
     gradients: {
         header: [string, string];
         workspace: [string, string];
+        borderGradient: [string, string, string];
     }
 }
 
@@ -25,24 +26,28 @@ const mathTheme: SubjetTheme = {
     gradients: {
         header: ['#C3E148', '#56B030'],
         workspace: ['#FCEBC8', '#BE7A4F'],
+        borderGradient: ['#2e5c1a', '#478f28', '#2e5c1a'],
     }
 };
 const germanTheme: SubjetTheme = {
     gradients: {
         header: ['#FEC4B4', '#D11E1E'],
-        workspace: ['#FCEBC8', '#BE7A4F']
+        workspace: ['#FCEBC8', '#BE7A4F'],
+        borderGradient: ['#BE7A4F', '#FCEBC8', '#BE7A4F'],
     }
 };
 const englishTheme: SubjetTheme = {
     gradients: {
         header: ['#C3E148', '#56B030'],
-        workspace: ['#FCEBC8', '#BE7A4F']
+        workspace: ['#FCEBC8', '#BE7A4F'],
+        borderGradient: ['#BE7A4F', '#FCEBC8', '#BE7A4F'],
     }
 };
 const timeTheme: SubjetTheme = {
     gradients: {
         header: ['#FEF9C1', '#D46804'],
-        workspace: ['#FCEBC8', '#BE7A4F']
+        workspace: ['#FCEBC8', '#BE7A4F'],
+        borderGradient: ['#BE7A4F', '#FCEBC8', '#BE7A4F'],
     }
 };
 

@@ -23,6 +23,7 @@ export default function RootLayout() {
           <Stack.Screen name="math/division" options={{ title: "Division" }} />
           <Stack.Screen name="time" options={{ title: "Uhrzeit" }} />
           <Stack.Screen name="time/analogtodigital" options={{ title: "Analog zu Digital" }} />
+          <Stack.Screen name="time/digitaltoanalog" options={{ title: "Digital zu Analog" }} />
         </Stack>
       </ThemeProvider>
     </ConvexProvider>

@@ -83,11 +83,11 @@ const AnalogWatch = ({ timeParts, editable }: { timeParts?: { hours: number; min
                     {/* Zeiger */}
                     {/* Minutenzeiger */}
                     {minutes !== null && (
-                        <Line id="minute" x1="100" y1="100" x2="100" y2="40" stroke="#666" strokeWidth="5" strokeLinecap="round" transform={`rotate(${minutes * 6} 100 100)`} />
+                        <Line id="minute" x1="100" y1="100" x2="100" y2="40" stroke="#e2a457" strokeWidth="7" strokeLinecap="round" transform={`rotate(${minutes * 6} 100 100)`} />
                     )}
                     {/* Stundenzeiger */}
                     {hours !== null && minutes !== null && (
-                        <Line id="hour" x1="100" y1="100" x2="100" y2="50" stroke="#e74c3c" strokeWidth="7" strokeLinecap="round" transform={`rotate(${(hours + minutes / 60) * 30} 100 100)`} />
+                        <Line id="hour" x1="100" y1="100" x2="100" y2="50" stroke="#BE713A" strokeWidth="9" strokeLinecap="round" transform={`rotate(${(hours + minutes / 60) * 30} 100 100)`} />
                     )}
 
                     {/* Mittelpunkt-Abdeckung */}

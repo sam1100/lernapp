@@ -4,7 +4,7 @@ import { TextInput } from 'react-native';
 //const regex = new RegExp("^([0-9]{1,2}):([0-9]{1,2})$");
 
 
-const DigitalWatch = ({ initialTimeValue, editable, onSubmit }: { initialTimeValue: string, editable?: boolean, onSubmit: (input: number) => void }) => {
+const DigitalWatch = ({ initialTimeValue, editable, onSubmit, ref }: { initialTimeValue: string, editable?: boolean, onSubmit: (input: number) => void, ref?: React.RefObject<TextInput | null> }) => {
 
     const [timeValue, setTimeValue] = React.useState<string>(initialTimeValue);
     const styles = createStyles();
@@ -55,6 +55,7 @@ const DigitalWatch = ({ initialTimeValue, editable, onSubmit }: { initialTimeVal
             returnKeyType="done"
             submitBehavior="blurAndSubmit"
             editable={editable}
+            ref={ref}
         />
     )
 }

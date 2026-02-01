@@ -24,7 +24,13 @@ export default function TimeSubject() {
                 <ImageBackground source={workspaceImage} resizeMode="cover" style={{ flex: 1 }}>
                     <View style={[styles.workspace, styles.workspaceCentered]}>
                         <Link href="/time/analogtodigital" >
-                            <Image source={require('@/assets/images/time-button.png')} resizeMode="contain" style={styles.subjectButton} />
+                            <Image source={require('@/assets/images/time-analog-digital-button.png')} resizeMode="contain" style={styles.subjectButton} />
+                        </Link>
+                        <Link href="/time/digitaltoanalog" >
+                            <Image source={require('@/assets/images/time-digital-analog-button.png')} resizeMode="contain" style={styles.subjectButton} />
+                        </Link>
+                        <Link href="/time/analogtodigital" >
+                            <Image source={require('@/assets/images/time-verbally-button.png')} resizeMode="contain" style={styles.subjectButton} />
                         </Link>
 
                     </View>
