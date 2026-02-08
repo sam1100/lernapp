@@ -59,8 +59,6 @@ const AnalogToDigital = () => {
 
         if (!!exercise && !!timeServiceRef.current && !!answer) {
 
-            console.log("Überprüfe Antwort:", answer);
-
             const answerResult: ComprehensiveCheckAnswerResult = timeServiceRef.current.comprehensiveCheckAnswer(answer);
             setAnswerResult(answerResult);
 
@@ -88,8 +86,6 @@ const AnalogToDigital = () => {
             digitalAm: currentAnswer?.digitalAm ?? null,
             digitalPm: input
         }));
-
-        //        refDigitalInputAM.current?.focus();
     }
 
     const totalCount = timeServiceRef.current?.getTotalExercisesCount() ?? 0;
@@ -108,7 +104,7 @@ const AnalogToDigital = () => {
 
                 <ImageBackground id="subjectWorkspace" source={tableImage} resizeMode="cover" style={styles.subjectWorkspace}>
                     {timeServiceRef.current === null || exercise != null ? (
-                        <ScrollView id="scrollView" scrollEnabled={true} keyboardShouldPersistTaps="handled" style={{ width: "100%" }}>
+                        <ScrollView id="scrollView" scrollEnabled={true} keyboardShouldPersistTaps="handled" style={{ width: "90%" }}>
                             <View id='analogWatchContainer' style={styles.analogWatchContainer}>
                                 <Watch timeParts={timeServiceRef.current?.getTimeParts(exercise?.analog || 0)} editable={false} />
                             </View>
@@ -119,10 +115,10 @@ const AnalogToDigital = () => {
                             </View>
 
                             <View id='digitalWatchesContainerResult' style={styles.digitalWatchesContainer}>
-                                <View id='digitalWatchWrapperAM' style={styles.digitalWatchElement}>
+                                <View id='digitalWatchWrapperAM' style={[styles.digitalWatchElement]}>
                                     <DigitalWatch initialTimeValue={(answer && timeServiceRef.current) ? timeServiceRef.current.getTimeString(answer?.digitalAm ?? null) : ""} editable={true} onSubmit={onSubmitAm} ref={refDigitalInputAM} />
                                 </View>
-                                <View id='digitalWatchWrapperPM' style={styles.digitalWatchElement}>
+                                <View id='digitalWatchWrapperPM' style={[styles.digitalWatchElement]}>
                                     <DigitalWatch initialTimeValue={(answer && timeServiceRef.current) ? timeServiceRef.current.getTimeString(answer?.digitalPm ?? null) : ""} editable={true} onSubmit={onSubmitPm} ref={refDigitalInputPM} />
                                 </View>
                             </View>

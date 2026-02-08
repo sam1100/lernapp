@@ -283,12 +283,11 @@ export const createStyles = () => {
             flexDirection: "row",
             alignItems: "center",
             gap: 20,
-            padding: 0,
             paddingVertical: 5,
-            paddingHorizontal: 20,
         },
 
         digitalWatchElement: {
+            flex: 1,
             flexGrow: 1,
             paddingHorizontal: 0,
         },

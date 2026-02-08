@@ -43,7 +43,7 @@ const DigitalWatch = ({ initialTimeValue, editable, onSubmit, ref, isResultCorre
         onSubmit?.(timeValue);
     }
 
-    console.log(`DigitalWatch render: isResultCorrect: ${JSON.stringify(isResultCorrect)} / timeValue: ${timeValue} / editable: ${editable}`);
+    //    console.log(`DigitalWatch render: isResultCorrect: ${JSON.stringify(isResultCorrect)} / timeValue: ${ timeValue } / editable: ${editable}`);
 
     return (
         <TextInput
