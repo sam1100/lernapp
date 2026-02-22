@@ -208,6 +208,7 @@ export const createStyles = () => {
         },
         exerciseDontText: {
             fontSize: 20,
+            fontFamily: fontDefinitions.fontFamilyStandard,
             marginTop: 10,
         },
         collectRewardsText: {

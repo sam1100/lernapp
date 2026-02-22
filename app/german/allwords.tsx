@@ -3,7 +3,7 @@ import { Doc } from '@/convex/_generated/dataModel';
 import { COIN_REASONS } from "@/convex/enums";
 import { useQuery } from 'convex/react';
 import React from 'react';
-import GermanWordsSubject from './words';
+import GermanWordsSubject from './germanWordsSubject';
 const currentWordsButton = require('@/assets/images/allwords.png');
 
 type GermanWords = Doc<"german_words">;
