@@ -44,10 +44,7 @@
         "expo-font",
         {
           "fonts": [
-            "./assets/fonts/FreckleFace-Regular.ttf",
-            "./assets/fonts/ravie.ttf",
-            "./assets/fonts/Whale I Tried.ttf",
-            "./assets/fonts/Seven Segment.ttf",
+            "./assets/fonts/whale.ttf",
             "./assets/fonts/digital-7.ttf"
           ]
         }

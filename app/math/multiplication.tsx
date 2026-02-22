@@ -8,10 +8,11 @@ import { COIN_REASONS } from "@/convex/enums";
 import useTheme from '@/hooks/useTheme';
 import { MathMultiplicationService, MathMultiplierExercise } from '@/services/MathMultiplicationService';
 import { Ionicons } from '@expo/vector-icons';
-import { useQuery } from "convex/react";
+import { useConvex } from "convex/react";
 import React, { useEffect, useRef, useState } from 'react';
 import { Image, ImageBackground, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 const tableImage = require('@/assets/images/table.png');
 const nextImage = require('@/assets/images/nextMath.png');
 const multiplicationButton = require('@/assets/images/multiplication.png');
@@ -25,17 +26,26 @@ interface ProgressPart {
 type MathMultiplication = Doc<"math_multiplication">;
 
 const MathMultiplicationSubject = () => {
+    const convex = useConvex();
+
     const { mathTheme, colors } = useTheme();
     const [exercise, setExercise] = useState<MathMultiplierExercise | null>(null);
     const [answer, setAnswer] = useState<string | null>(null);
     const [result, setResult] = useState<string | null>(null);
     const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean | null>(null);
     const [progressParts, setProgressParts] = useState<ProgressPart[]>([]);
+    const [multiplicationConfig, setMultiplicationConfig] = useState<MathMultiplication[] | null>(null);
 
     const mathServiceRef = useRef<MathMultiplicationService | null>(null);
     const inputRef = useRef<TextInput>(null);
 
-    const multiplicationConfig = useQuery(api.math.getMathMultiplicationConfig);
+    async function fetchConfig() {
+        let config = await convex.query(api.math.getMathMultiplicationConfig, {});
+        setMultiplicationConfig(config);
+    }
+
+    if (multiplicationConfig === null)
+        fetchConfig();
 
     useEffect(() => {
         if (!multiplicationConfig) return;

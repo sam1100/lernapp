@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 const fontDefinitions = {
     sizeStandard: 16,
-    fontFamilyStandard: 'FreckleFace-Regular',
+    fontFamilyStandard: 'whale',
     fontFamilyDigital: 'digital-7',
 };
 
@@ -115,7 +115,7 @@ export const createStyles = () => {
             height: 60,
         },
         collectButton: {
-            marginTop: 20,
+            marginTop: 14,
         },
         exerciseContainer: {
             marginTop: 0,
@@ -207,13 +207,13 @@ export const createStyles = () => {
             alignItems: "center",
         },
         exerciseDontText: {
-            fontSize: 20,
+            fontSize: 24,
             fontFamily: fontDefinitions.fontFamilyStandard,
             marginTop: 10,
         },
         collectRewardsText: {
             fontSize: 18,
-            fontWeight: "bold",
+            fontFamily: fontDefinitions.fontFamilyStandard,
             marginTop: 40,
         },
         rewardCoinImage: {
@@ -222,8 +222,8 @@ export const createStyles = () => {
             marginVertical: 20,
         },
         rewardCoinsText: {
-            fontSize: 30,
-            fontWeight: "bold",
+            fontSize: 36,
+            fontFamily: fontDefinitions.fontFamilyStandard,
             color: "#7c3401",
         },
 

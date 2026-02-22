@@ -9,7 +9,7 @@ import { COIN_REASONS } from "@/convex/enums";
 import useTheme from '@/hooks/useTheme';
 import { MathDivisionExercise, MathDivisionService } from '@/services/MatchDivisionService';
 import { Ionicons } from '@expo/vector-icons';
-import { useQuery } from "convex/react";
+import { useConvex } from "convex/react";
 import React, { useEffect, useRef, useState } from 'react';
 import { Image, ImageBackground, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -21,18 +21,28 @@ const mathButton = require('@/assets/images/mathe-button.png');
 type MathDivision = Doc<"math_division">;
 
 const MathDivisionSubject = () => {
+    const convex = useConvex();
+
     const [exercise, setExercise] = useState<MathDivisionExercise | null>(null);
     const [answer, setAnswer] = useState<string | null>(null);
     const [result, setResult] = useState<string | null>(null);
     const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean | null>(null);
     const [progressParts, setProgressParts] = useState<ProgressPart[]>([]);
+    const [divisionConfig, setDivisionConfig] = useState<MathDivision[] | null>(null);
 
     const { mathTheme, colors } = useTheme();
     const styles = createStyles();
     const mathServiceRef = useRef<MathDivisionService | null>(null);
     const inputRef = useRef<TextInput>(null);
 
-    const divisionConfig = useQuery(api.math.getMathDivisionConfig);
+    //    const divisionConfig = useQuery(api.math.getMathDivisionConfig);
+    async function fetchConfig() {
+        let config = await convex.query(api.math.getMathDivisionConfig, {});
+        setDivisionConfig(config);
+    }
+
+    if (divisionConfig === null)
+        fetchConfig();
 
     useEffect(() => {
         if (!divisionConfig) return;
