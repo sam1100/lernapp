@@ -1,7 +1,7 @@
 import { defineSchema, defineTable } from "convex/server";
 
 import { v } from "convex/values";
-import { COIN_REASONS, GERMAN_WORD_TYPES, getEnumValues } from "./enums";
+import { COIN_REASONS, GERMAN_WORD_TYPES, getEnumValues, MATH_OPERATION_TYPES } from "./enums";
 
 export default defineSchema({
     math_multiplication: defineTable({
@@ -12,6 +12,30 @@ export default defineSchema({
     math_division: defineTable({
         serie: v.number(),
         multipliers: v.array(v.number()),
+        repetitions: v.number(),
+    }),
+    math_addition: defineTable({
+        addends: v.array(v.object({
+            from: v.number(),
+            to: v.number(),
+        })),
+        repetitions: v.number(),
+    }),
+    math_subtraction: defineTable({
+        addends: v.array(v.object({
+            from: v.number(),
+            to: v.number(),
+        })),
+        repetitions: v.number(),
+    }),
+    math_add_sub_mixed: defineTable({
+        operands: v.array(v.object({
+            valueFrom: v.number(),
+            valueTo: v.number(),
+            power: v.optional(v.number()), // Optionales Feld für die Potenzierung
+        })),
+        hasGap: v.boolean(),
+        type: v.union(...getEnumValues(MATH_OPERATION_TYPES).map(v.literal)),
         repetitions: v.number(),
     }),
     german_words: defineTable({

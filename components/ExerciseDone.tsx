@@ -23,7 +23,7 @@ const ExerciseDone = ({ correctAnswerCount, wrongAnswerCount, rewardCoins, reaso
             reason: reason
         });
 
-        console.log("Rewards collected:", rewards);
+        //        console.log("Rewards collected:", rewards);
         navigation.goBack();
     }
 
@@ -31,7 +31,7 @@ const ExerciseDone = ({ correctAnswerCount, wrongAnswerCount, rewardCoins, reaso
         setRewards(rewardForSubject ?? null);
     }, [rewardForSubject]);
 
-    console.log("Rewards to collect:", rewards);
+    //    console.log("Rewards to collect:", rewards);
 
     return (
         <View id='exerciseDoneContainer' style={styles.exerciseDoneContainer}>

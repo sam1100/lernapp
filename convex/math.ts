@@ -36,3 +36,27 @@ export const getMathDivisionConfig = query({
         return config;
     },
 });
+
+export const getMathAdditionConfig = query({
+    args: {},
+    handler: async (ctx) => {
+        const config = await ctx.db.query("math_addition").collect();
+        return config;
+    },
+});
+
+export const getMathSubtractionConfig = query({
+    args: {},
+    handler: async (ctx) => {
+        const config = await ctx.db.query("math_subtraction").collect();
+        return config;
+    },
+});
+
+export const getMathAddSubMixedConfig = query({
+    args: {},
+    handler: async (ctx) => {
+        const config = await ctx.db.query("math_add_sub_mixed").collect();
+        return config;
+    },
+});

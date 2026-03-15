@@ -21,6 +21,9 @@ export default function RootLayout() {
           <Stack.Screen name="math" options={{ title: "Mathe" }} />
           <Stack.Screen name="math/multiplication" options={{ title: "1x1" }} />
           <Stack.Screen name="math/division" options={{ title: "Division" }} />
+          <Stack.Screen name="math/addition" options={{ title: "Addition" }} />
+          <Stack.Screen name="math/subtraction" options={{ title: "Subtraktion" }} />
+          <Stack.Screen name="math/addsubmixed" options={{ title: "Gemischt" }} />
           <Stack.Screen name="time" options={{ title: "Uhrzeit" }} />
           <Stack.Screen name="time/analogtodigital" options={{ title: "Analog zu Digital" }} />
           <Stack.Screen name="time/digitaltoanalog" options={{ title: "Digital zu Analog" }} />

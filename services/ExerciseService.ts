@@ -14,7 +14,7 @@ export abstract class ExerciseService<T> {
     }
 
     getNextExercise(): T | null {
-        if (this.exercises.length === 0) {
+        if (!this.hasNext()) {
             return null;
         } else {
             if (this.currentIndex >= 0)
@@ -31,7 +31,7 @@ export abstract class ExerciseService<T> {
 
 
     hasNext(): boolean {
-        return this.exercises.length > 1; // Solange die letzte / aktuelle Aufgabe nicht entfernt wurde, ist length >= 1. Daher muss auf > 1 geprüft werden.
+        return this.exercises.length > 0;
     }
 
     checkAnswer(answer: any): boolean {
@@ -79,5 +79,9 @@ export abstract class ExerciseService<T> {
 
     getTotalAnswersCount(): number {
         return this.getTotalExercisesCount() - this.exercises.length;
+    }
+
+    getAnswer(): number | string {
+        return "";
     }
 }

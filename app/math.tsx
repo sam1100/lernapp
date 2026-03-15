@@ -29,11 +29,14 @@ export default function MathSubject() {
                         <Link href="/math/division" >
                             <Image source={require('@/assets/images/division.png')} resizeMode="contain" style={styles.subjectButton} />
                         </Link>
-                        <Link href="/math/multiplication" >
+                        <Link href="/math/addition" >
                             <Image source={require('@/assets/images/addition.png')} resizeMode="contain" style={styles.subjectButton} />
                         </Link>
-                        <Link href="/math/multiplication" >
+                        <Link href="/math/subtraction" >
                             <Image source={require('@/assets/images/subtraction.png')} resizeMode="contain" style={styles.subjectButton} />
+                        </Link>
+                        <Link href="/math/addsubmixed" >
+                            <Image source={require('@/assets/images/mixed1000.png')} resizeMode="contain" style={styles.subjectButton} />
                         </Link>
 
                     </View>

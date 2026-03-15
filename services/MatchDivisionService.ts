@@ -1,13 +1,15 @@
 import { Doc } from "@/convex/_generated/dataModel";
-import { ExerciseService } from "./ExerciseService";
+import { MATH_OPERATION_TYPES } from "@/convex/enums";
+import { MathExercise, MathService, ValueConfig } from "./MathService";
 
-export interface MathDivisionExercise {
+export interface MathDivisionExercise extends MathExercise {
     dividend: number;
     divisor: number;
 }
 
 type MathDivision = Doc<"math_division">;
-export class MathDivisionService extends ExerciseService<MathDivisionExercise> {
+
+export class MathDivisionService extends MathService {
 
     private series: MathDivision[] = [];
 
@@ -17,22 +19,24 @@ export class MathDivisionService extends ExerciseService<MathDivisionExercise> {
         this.init();
     }
 
-    init(): void {
+    private init(): void {
         this.exercises = [];
 
+        const hasGap = false;
         this.series.forEach((serieConfig) => {
             for (let i = 0; i < serieConfig.repetitions; i++) {
                 serieConfig.multipliers.forEach((multiplier) => {
-                    this.exercises.push({ dividend: serieConfig.serie * multiplier, divisor: serieConfig.serie });
+                    const value1: ValueConfig = { value: serieConfig.serie * multiplier, operation: MATH_OPERATION_TYPES.DIVISION };
+                    const value2: ValueConfig = { value: serieConfig.serie, operation: MATH_OPERATION_TYPES.DIVISION };
+                    const exerciseValues: ValueConfig[] = [value1, value2];
+                    const exerciseResult = multiplier;
+                    const solution = exerciseResult;
+
+                    this.exercises.push({ values: exerciseValues, hasGap, exerciseResult, solution });
                 });
             }
         });
 
         this.totalExercisesCount = this.exercises.length;
-    }
-
-    basicCheckAnswer(answer: any): boolean {
-        let exercise: MathDivisionExercise = this.exercises[this.currentIndex];
-        return (exercise!.dividend / exercise!.divisor) === answer;
     }
 }

@@ -1,144 +1,28 @@
-import { colorDefinitions, createStyles } from '@/assets/styles/styles';
-import ExerciseDone from '@/components/ExerciseDone';
-import HeaderSubject from '@/components/HeaderSubject';
-import LoadingSpinner from '@/components/LoadingSpinner';
 import { api } from "@/convex/_generated/api";
 import { Doc } from "@/convex/_generated/dataModel";
-import { COIN_REASONS } from "@/convex/enums";
-import useTheme from '@/hooks/useTheme';
-import { MathMultiplicationService, MathMultiplierExercise } from '@/services/MathMultiplicationService';
-import { Ionicons } from '@expo/vector-icons';
+import { MathMultiplicationService } from '@/services/MathMultiplicationService';
 import { useConvex } from "convex/react";
-import React, { useEffect, useRef, useState } from 'react';
-import { Image, ImageBackground, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React from 'react';
+import MathExerciseView from './mathexerciseview';
 
-const tableImage = require('@/assets/images/table.png');
-const nextImage = require('@/assets/images/nextMath.png');
-const multiplicationButton = require('@/assets/images/multiplication.png');
 
-interface ProgressPart {
-    start: number;
-    width: number;
-    colors: [string, string];
-}
 
 type MathMultiplication = Doc<"math_multiplication">;
 
 const MathMultiplicationSubject = () => {
     const convex = useConvex();
-
-    const { mathTheme, colors } = useTheme();
-    const [exercise, setExercise] = useState<MathMultiplierExercise | null>(null);
-    const [answer, setAnswer] = useState<string | null>(null);
-    const [result, setResult] = useState<string | null>(null);
-    const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean | null>(null);
-    const [progressParts, setProgressParts] = useState<ProgressPart[]>([]);
-    const [multiplicationConfig, setMultiplicationConfig] = useState<MathMultiplication[] | null>(null);
-
-    const mathServiceRef = useRef<MathMultiplicationService | null>(null);
-    const inputRef = useRef<TextInput>(null);
+    const [service, setService] = React.useState<MathMultiplicationService | null>(null);
 
     async function fetchConfig() {
         let config = await convex.query(api.math.getMathMultiplicationConfig, {});
-        setMultiplicationConfig(config);
+        setService(new MathMultiplicationService(config));
     }
 
-    if (multiplicationConfig === null)
+    if (service === null)
         fetchConfig();
 
-    useEffect(() => {
-        if (!multiplicationConfig) return;
-
-        mathServiceRef.current = new MathMultiplicationService(multiplicationConfig);
-        setResult(null);
-        setIsAnswerCorrect(null);
-        setExercise(mathServiceRef.current.getNextExercise()!);
-        setProgressParts([]);
-        inputRef.current?.focus();
-    }, [multiplicationConfig]);
-
-    const styles = createStyles();
-
-    const nextExercise = () => {
-        setIsAnswerCorrect(null);
-        setAnswer(null);
-        setResult(null);
-        inputRef.current?.focus();
-        if (mathServiceRef.current?.hasNext()) {
-            const next = mathServiceRef.current.getNextExercise();
-            setExercise(next!);
-        } else
-            setExercise(null);
-    }
-
-    const checkAnswer = (input: number) => {
-        if (!!exercise && !!mathServiceRef.current) {
-            const correct = mathServiceRef.current.checkAnswer(input);
-            if (correct) {
-                setIsAnswerCorrect(true);
-                waitAndShowNextExercise();
-            } else {
-                setAnswer(` = ${exercise.multiplier1 * exercise.multiplier2}`);
-                setIsAnswerCorrect(false);
-            }
-            addProgressPart(correct);
-        }
-    }
-
-    const addProgressPart = (correct: boolean) => {
-        const width: number = 100 / (mathServiceRef.current?.getTotalExercisesCount() ?? 1);
-        const start: number = progressParts.length * width;
-        const gradient: [string, string] = correct ? colors.gradients.correctAnswer : colors.gradients.wrongAnswer;
-        setProgressParts([...progressParts, { start, width, colors: gradient }]);
-    }
-
-    const waitAndShowNextExercise = () => {
-        setTimeout(() => {
-            nextExercise();
-        }, 1000);
-    }
-
-    const totalCount = mathServiceRef.current?.getTotalExercisesCount() ?? 0;
-    const doneCount = mathServiceRef.current?.getTotalAnswersCount() ?? 0;
-
-    // Solange die Daten von convex geladen werden, ist das Modell "todos" undefined.
-    if (!multiplicationConfig) return <LoadingSpinner />;
-
     return (
-        <SafeAreaView style={styles.containerLayout} edges={[]}>
-            <HeaderSubject theme={mathTheme} styles={styles} image={multiplicationButton} progressParts={progressParts} doneCount={doneCount} totalCount={totalCount} />
-            <ImageBackground source={tableImage} resizeMode="cover" style={styles.subjectWorkspace}>
-                {mathServiceRef.current === null || mathServiceRef.current?.hasNext() ? (
-                    <>
-                        <View id='exerciseContainer' style={[styles.horizontalContainer, styles.exerciseContainer]}>
-                            <Text style={styles.exercise}>{exercise?.multiplier1} x {exercise?.multiplier2}</Text>
-                            <Text style={[styles.exercise, styles.exerciseWrongAnswer]}>{answer}</Text>
-                        </View>
-                        <View id='inputContainer' style={[styles.horizontalContainer, styles.inputContainer]}>
-                            <TextInput
-                                ref={inputRef}
-                                style={[styles.exerciseInput, styles.exerciseInputMathSubject]}
-                                placeholder=""
-                                value={!!result ? result.toString() : ''}
-                                onChangeText={setResult}
-                                onSubmitEditing={e => checkAnswer(Number(e.nativeEvent.text))}
-                                placeholderTextColor={"rgb(100,100,100)"}
-                                keyboardType="numeric"
-                                returnKeyType="done"
-                                submitBehavior="blurAndSubmit"
-                            />
-                            {isAnswerCorrect !== null && (isAnswerCorrect ? <Ionicons name='checkmark-circle-outline' color={colorDefinitions.correctAnswer} size={52} /> : <Ionicons name='close-circle-outline' color={colorDefinitions.wrongAnswer} size={52} />)}
-                        </View>
-                        <View id='buttonContainer' style={styles.buttonContainer}>
-                            {isAnswerCorrect !== null && (!isAnswerCorrect ? <TouchableOpacity onPress={() => { nextExercise() }}><Image source={nextImage} resizeMode='contain' style={styles.subjectButton} /></TouchableOpacity> : null)}
-                        </View>
-                    </>
-                ) : (
-                    <ExerciseDone correctAnswerCount={mathServiceRef.current?.getCorrectAnswersCount() ?? 0} wrongAnswerCount={mathServiceRef.current?.getWrongAnswersCount() ?? 0} rewardCoins={10} reason={COIN_REASONS.MATH_MULTIPLICATION} styles={styles} />
-                )}
-            </ImageBackground>
-        </SafeAreaView >
+        <MathExerciseView service={service} />
     )
 }
 

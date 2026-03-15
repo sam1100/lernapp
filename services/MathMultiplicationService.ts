@@ -1,14 +1,15 @@
 import { Doc } from "@/convex/_generated/dataModel";
-import { ExerciseService } from "./ExerciseService";
+import { MATH_OPERATION_TYPES } from "@/convex/enums";
+import { MathExercise, MathService, ValueConfig } from "./MathService";
 
-export interface MathMultiplierExercise {
+export interface MathMultiplierExercise extends MathExercise {
     multiplier1: number;
     multiplier2: number;
 }
 
 type MathMultiplication = Doc<"math_multiplication">;
 
-export class MathMultiplicationService extends ExerciseService<MathMultiplierExercise> {
+export class MathMultiplicationService extends MathService {
 
     private series: MathMultiplication[] = [];
 
@@ -18,22 +19,24 @@ export class MathMultiplicationService extends ExerciseService<MathMultiplierExe
         this.init();
     }
 
-    init(): void {
+    private init(): void {
         this.exercises = [];
 
+        const hasGap = false;
         this.series.forEach((serieConfig) => {
             for (let i = 0; i < serieConfig.repetitions; i++) {
                 serieConfig.multipliers.forEach((multiplier) => {
-                    this.exercises.push({ multiplier1: serieConfig.serie, multiplier2: multiplier });
+                    const value1: ValueConfig = { value: serieConfig.serie, operation: MATH_OPERATION_TYPES.MULTIPLICATION };
+                    const value2: ValueConfig = { value: multiplier, operation: MATH_OPERATION_TYPES.MULTIPLICATION };
+                    const exerciseValues: ValueConfig[] = [value1, value2];
+                    const exerciseResult = serieConfig.serie * multiplier;
+                    const solution = exerciseResult;
+
+                    this.exercises.push({ values: exerciseValues, hasGap, exerciseResult, solution });
                 });
             }
         });
 
         this.totalExercisesCount = this.exercises.length;
-    }
-
-    basicCheckAnswer(answer: any): boolean {
-        let exercise: MathMultiplierExercise = this.exercises[this.currentIndex];
-        return (exercise!.multiplier1 * exercise!.multiplier2) === answer;
     }
 }

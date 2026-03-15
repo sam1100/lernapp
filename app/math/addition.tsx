@@ -1,21 +1,20 @@
 import { api } from "@/convex/_generated/api";
 import { Doc } from "@/convex/_generated/dataModel";
-import { MathDivisionService } from "@/services/MatchDivisionService";
+import { MathAdditionService } from "@/services/MathAdditionService";
 import { useConvex } from "convex/react";
 import React from 'react';
 import MathExerciseView from './mathexerciseview';
 
 
+type MathAddition = Doc<"math_addition">;
 
-type MathDivision = Doc<"math_division">;
-
-const MathDivisionSubject = () => {
+const MathAdditionSubject = () => {
     const convex = useConvex();
-    const [service, setService] = React.useState<MathDivisionService | null>(null);
+    const [service, setService] = React.useState<MathAdditionService | null>(null);
 
     async function fetchConfig() {
-        let config = await convex.query(api.math.getMathDivisionConfig, {});
-        setService(new MathDivisionService(config));
+        let config = await convex.query(api.math.getMathAdditionConfig, {});
+        setService(new MathAdditionService(config));
     }
 
     if (service === null)
@@ -26,4 +25,4 @@ const MathDivisionSubject = () => {
     )
 }
 
-export default MathDivisionSubject;
+export default MathAdditionSubject;

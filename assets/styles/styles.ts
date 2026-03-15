@@ -2,12 +2,12 @@ import { StyleSheet } from "react-native";
 
 const fontDefinitions = {
     sizeStandard: 16,
-    fontFamilyStandard: 'whale',
+    fontFamilyFancy: 'whale',
     fontFamilyDigital: 'digital-7',
 };
 
 export const colorDefinitions = {
-    correctAnswer: '#549E24',
+    correctAnswer: '#427e1a',
     correctAnswerBackground: 'rgba(34, 197, 94, 0.2)',
     wrongAnswer: '#C00000',
     wrongAnswerBackground: 'rgba(239, 68, 68, 0.2)',
@@ -124,11 +124,14 @@ export const createStyles = () => {
             paddingTop: 20,
             paddingBottom: 0,
             fontSize: 30,
-            fontFamily: fontDefinitions.fontFamilyStandard,
+            fontWeight: "bold",
             color: "#1e293b",
         },
         exerciseWrongAnswer: {
             color: colorDefinitions.wrongAnswer,
+        },
+        exerciseCorrectAnswer: {
+            color: colorDefinitions.correctAnswer,
         },
         inputContainer: {
             marginTop: 20,
@@ -142,7 +145,7 @@ export const createStyles = () => {
             paddingHorizontal: 20,
             paddingVertical: 10,
             fontSize: 26,
-            fontFamily: fontDefinitions.fontFamilyStandard,
+            fontWeight: "bold",
             textAlign: "center",
         },
         exerciseInputMathSubject: {
@@ -180,14 +183,14 @@ export const createStyles = () => {
         },
         progressText: {
             fontSize: fontDefinitions.sizeStandard,
-            fontFamily: fontDefinitions.fontFamilyStandard,
+            fontFamily: fontDefinitions.fontFamilyFancy,
             minWidth: 40,
             textAlign: "right",
             color: "#10b981",
         },
         progressTextMathSubject: {
             fontSize: fontDefinitions.sizeStandard,
-            fontFamily: fontDefinitions.fontFamilyStandard,
+            fontFamily: fontDefinitions.fontFamilyFancy,
             color: '#5f3419'
         },
         loadingContainer: {
@@ -198,7 +201,7 @@ export const createStyles = () => {
         loadingText: {
             marginTop: 20,
             fontSize: fontDefinitions.sizeStandard,
-            fontFamily: fontDefinitions.fontFamilyStandard,
+            fontFamily: fontDefinitions.fontFamilyFancy,
             color: "#1e293b",
         },
         exerciseDoneContainer: {
@@ -208,12 +211,12 @@ export const createStyles = () => {
         },
         exerciseDontText: {
             fontSize: 24,
-            fontFamily: fontDefinitions.fontFamilyStandard,
+            fontFamily: fontDefinitions.fontFamilyFancy,
             marginTop: 10,
         },
         collectRewardsText: {
-            fontSize: 18,
-            fontFamily: fontDefinitions.fontFamilyStandard,
+            fontSize: 20,
+            fontFamily: fontDefinitions.fontFamilyFancy,
             marginTop: 40,
         },
         rewardCoinImage: {
@@ -223,7 +226,7 @@ export const createStyles = () => {
         },
         rewardCoinsText: {
             fontSize: 36,
-            fontFamily: fontDefinitions.fontFamilyStandard,
+            fontFamily: fontDefinitions.fontFamilyFancy,
             color: "#7c3401",
         },
 
@@ -245,7 +248,7 @@ export const createStyles = () => {
             marginTop: 10,
         },
         clockNavigationText: {
-            fontFamily: fontDefinitions.fontFamilyStandard,
+            fontFamily: fontDefinitions.fontFamilyFancy,
             fontSize: 16,
             color: "#333",
         },
@@ -294,7 +297,7 @@ export const createStyles = () => {
         },
         digitalWatchAmPm: {
             fontSize: fontDefinitions.sizeStandard,
-            fontFamily: fontDefinitions.fontFamilyStandard,
+            fontFamily: fontDefinitions.fontFamilyFancy,
             textAlign: "left",
         },
 
@@ -325,7 +328,7 @@ export const createStyles = () => {
         coinText: {
             marginTop: 10,
             fontSize: 30,
-            fontFamily: fontDefinitions.fontFamilyStandard,
+            fontFamily: fontDefinitions.fontFamilyFancy,
             color: "#7c3401",
         },
         coinWrapper: {

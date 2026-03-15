@@ -45,12 +45,10 @@ export default function GermanWordsSubject({ headerImage, words, reason }: { hea
 
     const nextExercise = (): void => {
         setRevealed(false);
-        if (wordsServiceRef.current?.hasNext()) {
-            const next = wordsServiceRef.current.getNextExercise();
-            setExercise(next!);
-            speak(next!.word);
-        } else {
-            setExercise(null);
+        const next = wordsServiceRef.current?.getNextExercise();
+        setExercise(next!);
+        if (next) {
+            speak(next.word);
         }
     }
 
