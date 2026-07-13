@@ -32,7 +32,7 @@ export class MathMultiplicationService extends MathService {
                     const exerciseResult = serieConfig.serie * multiplier;
                     const solution = exerciseResult;
 
-                    this.exercises.push({ values: exerciseValues, hasGap, exerciseResult, solution });
+                    this.exercises.push({ values: exerciseValues, hasGap, exerciseResult, solution, exerciseResults: null });
                 });
             }
         });

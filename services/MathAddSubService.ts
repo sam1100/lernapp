@@ -61,7 +61,7 @@ export class MathAddSubMixedService extends MathService {
 
                 console.log("Generated exercise:", exerciseValues.map(ev => ev.value), "Result:", exerciseResult, "Solution:", solution, "Has gap:", hasGap);
 
-                this.exercises.push({ values: exerciseValues, hasGap, exerciseResult, solution: solution });
+                this.exercises.push({ values: exerciseValues, hasGap, exerciseResult, solution: solution, exerciseResults: null });
             }
         });
 
