@@ -22,7 +22,7 @@ const MathDivisionSubject = () => {
         fetchConfig();
 
     return (
-        <MathExerciseView service={service} />
+        <MathExerciseView service={service} headerImage={require('@/assets/images/division.png')} />
     )
 }
 

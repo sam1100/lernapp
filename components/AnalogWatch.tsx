@@ -8,8 +8,7 @@ const turnLeftButton = require('@/assets/images/turn-left-button.png');
 
 const MINUTE_PRECISION = 5;
 
-const AnalogWatch = ({ timeParts, editable }: { timeParts?: { hours: number; minutes: number }, editable?: boolean }) => {
-
+const AnalogWatch = ({ timeParts, isResultCorrect, resultTimeParts, editable, onSubmit }: { timeParts?: { hours: number; minutes: number }, isResultCorrect?: boolean, resultTimeParts?: { hours: number; minutes: number }, editable?: boolean, onSubmit: (input: number) => void }) => {
     const styles = createStyles();
 
     const [hours, setHours] = useState<number | null>(null);
@@ -22,40 +21,64 @@ const AnalogWatch = ({ timeParts, editable }: { timeParts?: { hours: number; min
         }
     }, [timeParts]);
 
-    const hoursTurnRight = () => {
-        setHours((prevHours) => (prevHours === 12 ? 1 : prevHours! + 1));
+    const hoursTurnRight = (doSubmitTime: boolean) => {
+        const newHours = (hours === null) ? null : (hours === 12 ? 1 : hours + 1);
+        setHours((prevHours) => newHours);
+        if (doSubmitTime)
+            submitTime(minutes, newHours);
+        return newHours;
     };
 
-    const hoursTurnLeft = () => {
-        setHours((prevHours) => (prevHours === 1 ? 12 : prevHours! - 1));
+    const hoursTurnLeft = (doSubmitTime: boolean) => {
+        const newHours = (hours === null) ? null : (hours === 1 ? 12 : (hours === 0 ? 11 : hours - 1));
+        setHours((prevHours) => newHours);
+        if (doSubmitTime)
+            submitTime(minutes, newHours);
+        return newHours;
     };
 
     const minutesTurnRight = () => {
         const minutesBefore = minutes;
-        setMinutes((prevMinutes) => (prevMinutes === 60 - MINUTE_PRECISION ? 0 : prevMinutes! + MINUTE_PRECISION));
+        const newMinutes = (minutes === null) ? null : (minutes === 60 - MINUTE_PRECISION ? 0 : minutes + MINUTE_PRECISION);
+        setMinutes((prevMinutes) => newMinutes);
 
+        let newHours = hours;
         if (minutesBefore === 60 - MINUTE_PRECISION)
-            hoursTurnRight();
+            newHours = hoursTurnRight(false);
 
+        submitTime(newMinutes, newHours);
     };
 
     const minutesTurnLeft = () => {
         const minutesBefore = minutes;
-        setMinutes((prevMinutes) => (prevMinutes === 0 ? 60 - MINUTE_PRECISION : prevMinutes! - MINUTE_PRECISION));
+        const newMinutes = (minutes === null) ? null : (minutes === 0 ? 60 - MINUTE_PRECISION : minutes - MINUTE_PRECISION);
+        setMinutes((prevMinutes) => newMinutes);
 
+        let newHours = hours;
         if (minutesBefore === 0)
-            hoursTurnLeft();
+            newHours = hoursTurnLeft(false);
+
+        submitTime(newMinutes, newHours);
     };
+
+    const submitTime = (minutes: number | null, hours: number | null) => {
+        if (hours !== null && minutes !== null) {
+            const timeValue = hours + minutes / 60;
+            onSubmit(timeValue);
+        }
+    };
+
+    const clockBackgroundColor = isResultCorrect === true ? 'rgba(190, 243, 201, 0.4)' : isResultCorrect === false ? '#f8d7da' : '#f8f9fa';
 
     return (
         <View id="watchNavigationContainer" style={styles.watchNavigationContainer}>
             {editable &&
                 <View id="hourContainer" style={styles.clockNavigationContainer}>
                     <Text style={styles.clockNavigationText}>Stunden</Text>
-                    <TouchableOpacity onPress={hoursTurnRight}>
+                    <TouchableOpacity onPress={() => hoursTurnRight(true)}>
                         <Image source={turnRightButton} resizeMode="contain" style={styles.clockNavigationButton} />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={hoursTurnLeft}>
+                    <TouchableOpacity onPress={() => hoursTurnLeft(true)}>
                         <Image source={turnLeftButton} resizeMode="contain" style={styles.clockNavigationButton} />
                     </TouchableOpacity>
                 </View>
@@ -63,7 +86,7 @@ const AnalogWatch = ({ timeParts, editable }: { timeParts?: { hours: number; min
             <View id="clockWrapper" style={styles.clockWrapper}>
                 <Svg width="100%" height="100%" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
                     {/* Zifferblatt Hintergrund */}
-                    <Circle cx="100" cy="100" r="95" fill="#f8f9fa" stroke="#333" strokeWidth="2" />
+                    <Circle cx="100" cy="100" r="95" fill={clockBackgroundColor} stroke="#333" strokeWidth="2" />
 
 
                     {/* 5-Minuten-Raster (Strichmarkierungen) */}
@@ -91,12 +114,20 @@ const AnalogWatch = ({ timeParts, editable }: { timeParts?: { hours: number; min
                     </G>
                     {/* Zeiger */}
                     {/* Minutenzeiger */}
-                    {minutes !== null && (
+                    {isResultCorrect !== false && minutes !== null && (
                         <Line id="minute" x1="100" y1="100" x2="100" y2="40" stroke="#e2a457" strokeWidth="7" strokeLinecap="round" transform={`rotate(${minutes * 6} 100 100)`} />
                     )}
                     {/* Stundenzeiger */}
-                    {hours !== null && minutes !== null && (
+                    {isResultCorrect !== false && hours !== null && minutes !== null && (
                         <Line id="hour" x1="100" y1="100" x2="100" y2="50" stroke="#BE713A" strokeWidth="9" strokeLinecap="round" transform={`rotate(${(hours + minutes / 60) * 30} 100 100)`} />
+                    )}
+
+                    {/* Falls das Ergebnis falsch ist */}
+                    {isResultCorrect === false && (
+                        <>
+                            <Line id="minute" x1="100" y1="100" x2="100" y2="40" stroke="#f16c62" strokeWidth="7" strokeLinecap="round" transform={`rotate(${resultTimeParts!.minutes * 6} 100 100)`} />
+                            <Line id="hour" x1="100" y1="100" x2="100" y2="50" stroke="#ce1f13" strokeWidth="9" strokeLinecap="round" transform={`rotate(${(resultTimeParts!.hours + resultTimeParts!.minutes / 60) * 30} 100 100)`} />
+                        </>
                     )}
 
                     {/* Mittelpunkt-Abdeckung */}

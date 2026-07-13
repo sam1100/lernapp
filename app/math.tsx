@@ -38,6 +38,9 @@ export default function MathSubject() {
                         <Link href="/math/addsubmixed" >
                             <Image source={require('@/assets/images/mixed1000.png')} resizeMode="contain" style={styles.subjectButton} />
                         </Link>
+                        <Link href="/math/divisionremainder" >
+                            <Image source={require('@/assets/images/divisionremainder.png')} resizeMode="contain" style={styles.subjectButton} />
+                        </Link>
 
                     </View>
                 </ImageBackground>

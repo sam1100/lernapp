@@ -53,6 +53,7 @@ const DigitalWatch = ({ initialTimeValue, editable, onSubmit, ref, isResultCorre
             maxLength={5}
             onChangeText={verifyTimeInput}
             onSubmitEditing={e => onSubmitEditing(e.nativeEvent.text)}
+            onBlur={e => onSubmitEditing(timeValue)}
             keyboardType="numeric"
             returnKeyType="done"
             submitBehavior="blurAndSubmit"

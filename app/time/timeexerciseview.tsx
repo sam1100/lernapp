@@ -4,12 +4,13 @@ import HeaderSubject from '@/components/HeaderSubject';
 import { ProgressPart } from '@/components/ProgressBar';
 import TimeBrickAnalogWatch from '@/components/TimeBrickAnalogWatch';
 import TimeBricksDigitalWatches from '@/components/TimeBrickDigitalWatches';
-import { api } from '@/convex/_generated/api';
 import { COIN_REASONS } from '@/convex/enums';
 import useTheme from '@/hooks/useTheme';
 import { ComprehensiveCheckAnswerResult } from '@/services/ExerciseService';
-import { TimeAnalogToDigitalExercise, TimeAnalogToDigitalResult, TimeAnalogToDigitalService } from '@/services/TimeAnalogToDigitalService';
-import { useQuery } from 'convex/react';
+import { TimeAnalogToDigitalService } from '@/services/TimeAnalogToDigitalService';
+import { TimeDigitalToAnalogService } from '@/services/TimeDigitalToAnalogService';
+import { TimeExercise, TimeResult, TimeService } from '@/services/TimeService';
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Image, ImageBackground, KeyboardAvoidingView, ScrollView, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -27,18 +28,17 @@ const enums = {
 
 export type TimeExerciseType = typeof enums[keyof typeof enums];
 
-const TimeExerciseView = ({ type }: { type: TimeExerciseType }) => {
+const TimeExerciseView = ({ type, timeConfig }: { type: TimeExerciseType, timeConfig: number | undefined }) => {
 
-    const [exercise, setExercise] = useState<TimeAnalogToDigitalExercise | null>(null);
-    const [answer, setAnswer] = useState<TimeAnalogToDigitalResult | null>(null);
+    const [exercise, setExercise] = useState<TimeExercise | null>(null);
+    const [answer, setAnswer] = useState<TimeResult | null>(null);
     const [answerResult, setAnswerResult] = useState<ComprehensiveCheckAnswerResult | null>(null);
     const [progressParts, setProgressParts] = useState<ProgressPart[]>([]);
 
     const { timeTheme, colors } = useTheme();
     const styles = createStyles();
 
-    const timeServiceRef = useRef<TimeAnalogToDigitalService | null>(null);
-    const timeConfig = useQuery(api.time.getTimeRepetitions, { reason: 'TIME_ANALOG_DIGITAL' });
+    const timeServiceRef = useRef<TimeService | null>(null);
 
     const refDigitalInputAM = useRef<TextInput | null>(null);
     const refDigitalInputPM = useRef<TextInput | null>(null);
@@ -46,16 +46,27 @@ const TimeExerciseView = ({ type }: { type: TimeExerciseType }) => {
     useEffect(() => {
         if (!timeConfig) return;
 
-        timeServiceRef.current = new TimeAnalogToDigitalService(timeConfig);
+        switch (type) {
+            case enums.ANALOG_TO_DIGITAL:
+                timeServiceRef.current = new TimeAnalogToDigitalService(timeConfig);
+                break;
+            case enums.DIGITAL_TO_ANALOG:
+                timeServiceRef.current = new TimeDigitalToAnalogService(timeConfig);
+                break;
+        }
         nextExercise();
         setProgressParts([]);
     }, [timeConfig]);
 
     const nextExercise = () => {
         setAnswerResult(null);
-        setAnswer(null);
         if (timeServiceRef.current?.hasNext()) {
-            const next = timeServiceRef.current.getNextExercise();
+            const next: TimeExercise | null = timeServiceRef.current.getNextExercise();
+            setAnswer({
+                analog: 0,
+                digitalAm: next?.isAm ? next.digitalAm : null,
+                digitalPm: next?.isAm === false ? next.digitalPm : null
+            });
             setExercise(next!);
         } else {
             timeServiceRef.current?.getNextExercise();
@@ -83,6 +94,7 @@ const TimeExerciseView = ({ type }: { type: TimeExerciseType }) => {
 
     const onSubmitAm = (input: number) => {
         setAnswer((currentAnswer) => ({
+            analog: currentAnswer?.analog ?? null,
             digitalAm: input,
             digitalPm: currentAnswer?.digitalPm ?? null
         }));
@@ -91,8 +103,16 @@ const TimeExerciseView = ({ type }: { type: TimeExerciseType }) => {
     }
     const onSubmitPm = (input: number) => {
         setAnswer((currentAnswer) => ({
+            analog: currentAnswer?.analog ?? null,
             digitalAm: currentAnswer?.digitalAm ?? null,
             digitalPm: input
+        }));
+    }
+    const onSubmitAnalog = (input: number) => {
+        setAnswer((currentAnswer) => ({
+            analog: input,
+            digitalAm: currentAnswer?.digitalAm ?? null,
+            digitalPm: currentAnswer?.digitalPm ?? null
         }));
     }
 
@@ -105,14 +125,14 @@ const TimeExerciseView = ({ type }: { type: TimeExerciseType }) => {
         if (type === enums.ANALOG_TO_DIGITAL) {
             return (
                 <>
-                    <TimeBrickAnalogWatch exercise={exercise} editable={false} timeServiceRef={timeServiceRef} styles={styles} />
-                    <TimeBricksDigitalWatches answer={answer} answerResult={answerResult} exercise={exercise} timeServiceRef={timeServiceRef} onSubmitAm={onSubmitAm} onSubmitPm={onSubmitPm} refDigitalInputAM={refDigitalInputAM} refDigitalInputPM={refDigitalInputPM} styles={styles} />
+                    <TimeBrickAnalogWatch answer={exercise?.result} answerResult={answerResult} result={exercise?.result} editable={false} timeServiceRef={timeServiceRef} onSubmit={onSubmitAnalog} styles={styles} />
+                    <TimeBricksDigitalWatches answer={answer} answerResult={answerResult} exercise={exercise} editable={{ am: true, pm: true }} timeServiceRef={timeServiceRef} onSubmitAm={onSubmitAm} onSubmitPm={onSubmitPm} refDigitalInputAM={refDigitalInputAM} refDigitalInputPM={refDigitalInputPM} styles={styles} />
                 </>);
         } else if (type === enums.DIGITAL_TO_ANALOG) {
             return (
                 <>
-                    <TimeBricksDigitalWatches answer={answer} answerResult={answerResult} exercise={exercise} timeServiceRef={timeServiceRef} onSubmitAm={onSubmitAm} onSubmitPm={onSubmitPm} refDigitalInputAM={refDigitalInputAM} refDigitalInputPM={refDigitalInputPM} styles={styles} />
-                    <TimeBrickAnalogWatch exercise={exercise} editable={true} timeServiceRef={timeServiceRef} styles={styles} />
+                    <TimeBricksDigitalWatches answer={answer} answerResult={answerResult} exercise={exercise} editable={{ am: !exercise?.isAm, pm: !!exercise?.isAm }} timeServiceRef={timeServiceRef} onSubmitAm={onSubmitAm} onSubmitPm={onSubmitPm} refDigitalInputAM={refDigitalInputAM} refDigitalInputPM={refDigitalInputPM} styles={styles} />
+                    <TimeBrickAnalogWatch answer={answer?.analog} answerResult={answerResult} result={exercise?.result} editable={true} timeServiceRef={timeServiceRef} onSubmit={onSubmitAnalog} styles={styles} />
                 </>);
         }
     }

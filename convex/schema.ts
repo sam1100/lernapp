@@ -38,6 +38,11 @@ export default defineSchema({
         type: v.union(...getEnumValues(MATH_OPERATION_TYPES).map(v.literal)),
         repetitions: v.number(),
     }),
+    math_division_remainder: defineTable({
+        serie: v.number(),
+        divisors: v.array(v.number()),
+        repetitions: v.number(),
+    }),
     german_words: defineTable({
         word: v.array(v.object({
             text: v.string(),

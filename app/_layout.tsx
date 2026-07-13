@@ -24,6 +24,7 @@ export default function RootLayout() {
           <Stack.Screen name="math/addition" options={{ title: "Addition" }} />
           <Stack.Screen name="math/subtraction" options={{ title: "Subtraktion" }} />
           <Stack.Screen name="math/addsubmixed" options={{ title: "Gemischt" }} />
+          <Stack.Screen name="math/divisionremainder" options={{ title: "Division mit Rest" }} />
           <Stack.Screen name="time" options={{ title: "Uhrzeit" }} />
           <Stack.Screen name="time/analogtodigital" options={{ title: "Analog zu Digital" }} />
           <Stack.Screen name="time/digitaltoanalog" options={{ title: "Digital zu Analog" }} />

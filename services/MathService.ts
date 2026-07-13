@@ -6,6 +6,7 @@ export interface MathExercise {
     hasGap: boolean;
     exerciseResult: number; // Ergebnis der Rechnung. Falls die Aufgabe eine Lücke hat, ist dies das Ergebnis der Rechnung ohne die Lücke.
     solution: number; // Ergebnis der Aufgabe die der Benutzer eingibt. Bei einer Lücke ist dies die Zahl, die in der Lücke steht.
+    exerciseResults: any; // Falls das Ergebnis mehr als nur eine Zahl ist, z.B. bei Division mit Rest, kann dies ein Objekt sein, das die verschiedenen Teile des Ergebnisses enthält.
 }
 
 export type RenderPart = {
@@ -81,7 +82,7 @@ export abstract class MathService extends ExerciseService<MathExercise> {
         return { exerciseParts: exerciseParts, result: resultPart };
     }
 
-    private getJoinChar(operation: MathOperationType): string {
+    protected getJoinChar(operation: MathOperationType): string {
         switch (operation) {
             case MATH_OPERATION_TYPES.ADDITION:
                 return " + ";
@@ -90,6 +91,7 @@ export abstract class MathService extends ExerciseService<MathExercise> {
             case MATH_OPERATION_TYPES.MULTIPLICATION:
                 return " x ";
             case MATH_OPERATION_TYPES.DIVISION:
+            case MATH_OPERATION_TYPES.DIVISION_REMAINDER:
                 return " ÷ ";
             default:
                 return " ";

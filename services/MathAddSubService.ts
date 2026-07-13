@@ -2,10 +2,6 @@ import { Doc } from "@/convex/_generated/dataModel";
 import { MATH_OPERATION_TYPES, MathOperationType } from "@/convex/enums";
 import { MathService, ValueConfig } from "./MathService";
 
-
-
-
-
 type MathAddSubMixed = Doc<"math_add_sub_mixed">;
 
 export class MathAddSubMixedService extends MathService {
@@ -27,7 +23,7 @@ export class MathAddSubMixedService extends MathService {
                 let exerciseResult = 0;
                 let solution = 0;
                 serieConfig.operands.forEach((operand) => {
-                    const operandValue = Math.floor(Math.random() * (operand.valueTo - operand.valueFrom + 1)) + operand.valueFrom + (operand.power ? Math.pow(10, operand.power) : 0);
+                    const operandValue = Math.floor(Math.random() * ((operand.valueTo - operand.valueFrom + 1)) + operand.valueFrom) * (operand.power ? Math.pow(10, operand.power) : 1);
                     exerciseResult += operandValue;
 
                     numbers.push(operandValue);
@@ -42,9 +38,12 @@ export class MathAddSubMixedService extends MathService {
                     // Addition - no need to change the order of numbers
                 } else {
                     // Subtraction
-                    exerciseValues.push(this.createValueConfig(exerciseResult, serieConfig.type as MathOperationType));
-                    const randomIndex = Math.floor(Math.random() * numbers.length);
-                    exerciseResult = numbers.splice(randomIndex, 1)[0];
+                    const exerciseResultValueConfig = this.createValueConfig(exerciseResult, type);
+
+                    const randomIndex = Math.floor(Math.random() * exerciseValues.length);
+                    exerciseResult = exerciseValues.splice(randomIndex, 1)[0].value;
+
+                    exerciseValues.unshift(exerciseResultValueConfig);
                 }
                 solution = exerciseResult;
 
@@ -59,6 +58,8 @@ export class MathAddSubMixedService extends MathService {
                 }
 
                 // console.log("Exercise numbers after gap:", exerciseValues, "Has gap:", hasGap, "Exercise result:", solution, "Result:", exerciseResult);
+
+                console.log("Generated exercise:", exerciseValues.map(ev => ev.value), "Result:", exerciseResult, "Solution:", solution, "Has gap:", hasGap);
 
                 this.exercises.push({ values: exerciseValues, hasGap, exerciseResult, solution: solution });
             }

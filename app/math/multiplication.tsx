@@ -6,7 +6,6 @@ import React from 'react';
 import MathExerciseView from './mathexerciseview';
 
 
-
 type MathMultiplication = Doc<"math_multiplication">;
 
 const MathMultiplicationSubject = () => {
@@ -22,7 +21,7 @@ const MathMultiplicationSubject = () => {
         fetchConfig();
 
     return (
-        <MathExerciseView service={service} />
+        <MathExerciseView service={service} headerImage={require('@/assets/images/multiplication.png')} />
     )
 }
 

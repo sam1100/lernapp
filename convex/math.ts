@@ -60,3 +60,11 @@ export const getMathAddSubMixedConfig = query({
         return config;
     },
 });
+
+export const getMathDivisionRemainderConfig = query({
+    args: {},
+    handler: async (ctx) => {
+        const config = await ctx.db.query("math_division_remainder").collect();
+        return config;
+    },
+});

@@ -11,6 +11,7 @@ export const colorDefinitions = {
     correctAnswerBackground: 'rgba(34, 197, 94, 0.2)',
     wrongAnswer: '#C00000',
     wrongAnswerBackground: 'rgba(239, 68, 68, 0.2)',
+    placeholderText: '#cc9979',
 };
 
 export const createStyles = () => {
@@ -83,6 +84,12 @@ export const createStyles = () => {
             alignContent: "center",
             marginTop: 0,
         },
+        verticalContainer: {
+            flexDirection: "column",
+            alignItems: "center",
+            alignContent: "center",
+            marginTop: 10,
+        },
         subjectWorkspace: {
             flex: 1,
             minHeight: "100%",
@@ -135,6 +142,10 @@ export const createStyles = () => {
         },
         inputContainer: {
             marginTop: 20,
+        },
+        text: {
+            fontSize: fontDefinitions.sizeStandard,
+            fontFamily: fontDefinitions.fontFamilyFancy,
         },
         exerciseInput: {
             minWidth: 200,
@@ -279,7 +290,7 @@ export const createStyles = () => {
             alignSelf: "center",
         },
         digitalWatchInputDisabled: {
-            backgroundColor: "#f3f4f6",
+            backgroundColor: "rgba(189, 128, 85, 0.4)",
         },
 
         digitalWatchesContainer: {

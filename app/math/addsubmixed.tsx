@@ -21,7 +21,7 @@ const MathAddSubMixedSubject = () => {
         fetchConfig();
 
     return (
-        <MathExerciseView service={service} />
+        <MathExerciseView service={service} headerImage={require('@/assets/images/mixed1000.png')} />
     )
 }
 

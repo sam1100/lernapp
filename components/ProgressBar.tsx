@@ -25,7 +25,7 @@ const ProgressBar = ({ progressParts, doneCount, totalCount }: { progressParts: 
                             style={[styles.progressFill, { left: `${part.start}%`, width: `${part.width}%` }]}
                         />))}
                 </View>
-                <Text style={styles.progressTextMathSubject}>{`${doneCount} von ${totalCount}`}</Text>
+                <Text style={styles.progressTextMathSubject}>{`${doneCount + 1} von ${totalCount}`}</Text>
             </View>
         </View>
     );

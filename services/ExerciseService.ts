@@ -51,7 +51,7 @@ export abstract class ExerciseService<T> {
         return comprehensiveCheckAnswerResult;
     }
 
-    abstract basicComprehensiveCheckAnswer(answer: any): ComprehensiveCheckAnswerResult;
+    protected abstract basicComprehensiveCheckAnswer(answer: any): ComprehensiveCheckAnswerResult;
 
     protected abstract basicCheckAnswer(answer: any): boolean;
 

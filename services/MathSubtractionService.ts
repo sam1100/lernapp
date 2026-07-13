@@ -22,6 +22,7 @@ export class MathSubtractionService extends MathService {
         this.exercises = [];
 
         const hasGap = false;
+
         this.series.forEach((serieConfig) => {
             for (let i = 0; i < serieConfig.repetitions; i++) {
                 const values: ValueConfig[] = [];
@@ -38,7 +39,7 @@ export class MathSubtractionService extends MathService {
 
                 values.unshift({ value: result, operation: MATH_OPERATION_TYPES.SUBTRACTION });
 
-                this.exercises.push({ values, hasGap, exerciseResult: exerciseResult.value, solution: result });
+                this.exercises.push({ values, hasGap, exerciseResult: exerciseResult.value, solution: exerciseResult.value });
             }
         });
 

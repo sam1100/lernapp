@@ -1,8 +1,18 @@
 import { ExerciseService } from "./ExerciseService";
 
-export interface TimeExercise { }
+export interface TimeExercise {
+    result: number | null;
+    isAm: boolean | null;
+    digitalAm: number | null;
+    digitalPm: number | null;
+    analog: number | null;
+}
 
-export interface TimeResult { }
+export interface TimeResult {
+    analog: number | null;
+    digitalAm: number | null;
+    digitalPm: number | null;
+}
 
 export interface ResultValidation {
     digitalAm: boolean;
@@ -10,7 +20,7 @@ export interface ResultValidation {
     analog: boolean;
 }
 
-export abstract class TimeService<T extends TimeExercise, R extends TimeResult> extends ExerciseService<T> {
+export abstract class TimeService extends ExerciseService<TimeExercise> {
     private timeExercises: TimeExercise[] = [];
 
     constructor(repetitions: number) {
@@ -36,15 +46,22 @@ export abstract class TimeService<T extends TimeExercise, R extends TimeResult> 
         return hours + minutes / 60;
     }
 
-    protected abstract createExercise(time: number): T;
+    protected abstract createExercise(time: number): TimeExercise;
 
-    protected getDigtitalAmTime(time: number): number {
+    public getDigtitalAmTime(time: number): number {
         const hours: number = Math.floor(time);
         return hours >= 12 ? time - 12 : time;
     }
-    protected getDigtitalPmTime(time: number): number {
+    public getDigtitalPmTime(time: number): number {
         const hours: number = Math.floor(time);
         return hours < 12 ? time + 12 : time;
+    }
+
+    public getDititalAmTimeString(time: number | null): string {
+        return this.getTimeString(this.getDigtitalAmTime(time ?? 0));
+    }
+    public getDititalPmTimeString(time: number | null): string {
+        return this.getTimeString(this.getDigtitalPmTime(time ?? 0));
     }
 
     getTimeString(time: number | null): string {
