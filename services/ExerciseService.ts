@@ -78,7 +78,9 @@ export abstract class ExerciseService<T> {
     }
 
     getTotalAnswersCount(): number {
-        return this.getTotalExercisesCount() - this.exercises.length;
+        //        console.log(`Total answers count: ${this.getTotalExercisesCount()} - ${this.exercises.length}`);
+        // Math.min, da der Benutzer nach der letzten Aufgabe nochmals Weiter klickt und totalExcecisesCount dann 0 wird, was zu einer negativen Zahl führt und die Anzeige der Fortschrittsleiste zerstört.
+        return Math.min(this.getTotalExercisesCount() - 1, this.getTotalExercisesCount() - this.exercises.length);
     }
 
     getAnswer(): number | string {

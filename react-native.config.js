@@ -1,6 +1,8 @@
 module.exports = {
     project: {
-        android: {},
+        android: {
+            packageName: 'com.foerdi.lernapp',
+        },
     },
     assets: ['./assets/fonts/'],
 };

@@ -135,7 +135,7 @@ const MathExerciseView = ({ service }: { service: MathService | null }) => {
                                 value={!!result ? result.toString() : ''}
                                 onChangeText={setResult}
                                 onSubmitEditing={e => checkAnswer(Number(e.nativeEvent.text))}
-                                placeholderTextColor={"rgb(100,100,100)"}
+                                placeholderTextColor={colorDefinitions.placeholderText}
                                 keyboardType="numeric"
                                 returnKeyType="done"
                                 submitBehavior="blurAndSubmit"
