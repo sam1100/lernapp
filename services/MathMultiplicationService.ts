@@ -25,6 +25,7 @@ export class MathMultiplicationService extends MathService {
         const hasGap = false;
         this.series.forEach((serieConfig) => {
             for (let i = 0; i < serieConfig.repetitions; i++) {
+                const seriesExcercises: MathExercise[] = [];
                 serieConfig.multipliers.forEach((multiplier) => {
                     const value1: ValueConfig = { value: serieConfig.serie, operation: MATH_OPERATION_TYPES.MULTIPLICATION };
                     const value2: ValueConfig = { value: multiplier, operation: MATH_OPERATION_TYPES.MULTIPLICATION };
@@ -32,8 +33,9 @@ export class MathMultiplicationService extends MathService {
                     const exerciseResult = serieConfig.serie * multiplier;
                     const solution = exerciseResult;
 
-                    this.exercises.push({ values: exerciseValues, hasGap, exerciseResult, solution, exerciseResults: null });
+                    seriesExcercises.push({ values: exerciseValues, hasGap, exerciseResult, solution, exerciseResults: null });
                 });
+                this.setExcercisesRegardingTheirCoverage(seriesExcercises, serieConfig.coverage);
             }
         });
 

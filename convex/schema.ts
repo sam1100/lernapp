@@ -8,11 +8,13 @@ export default defineSchema({
         serie: v.number(),
         multipliers: v.array(v.number()),
         repetitions: v.number(),
+        coverage: v.optional(v.number()),
     }),
     math_division: defineTable({
         serie: v.number(),
         multipliers: v.array(v.number()),
         repetitions: v.number(),
+        coverage: v.optional(v.number()),
     }),
     math_addition: defineTable({
         addends: v.array(v.object({
@@ -42,6 +44,7 @@ export default defineSchema({
         serie: v.number(),
         divisors: v.array(v.number()),
         repetitions: v.number(),
+        coverage: v.optional(v.number()),
     }),
     german_words: defineTable({
         word: v.array(v.object({

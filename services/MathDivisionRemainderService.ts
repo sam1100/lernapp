@@ -41,7 +41,9 @@ export class MathDivisionRemainderService extends MathService {
         const hasGap = false;
         this.series.forEach((serieConfig) => {
             for (let i = 0; i < serieConfig.repetitions; i++) {
+                const seriesExcercises: MathExercise[] = [];
                 serieConfig.divisors.forEach((divisor) => {
+
                     const remainder: number = Math.floor(Math.random() * (serieConfig.serie - 1));
                     const value1: ValueConfig = { value: divisor * serieConfig.serie + remainder, operation: MATH_OPERATION_TYPES.DIVISION_REMAINDER };
                     const value2: ValueConfig = { value: serieConfig.serie, operation: MATH_OPERATION_TYPES.DIVISION_REMAINDER };
@@ -54,8 +56,10 @@ export class MathDivisionRemainderService extends MathService {
                         remainder: remainder
                     };
 
-                    this.exercises.push({ values: exerciseValues, hasGap, exerciseResult, solution, exerciseResults });
+                    seriesExcercises.push({ values: exerciseValues, hasGap, exerciseResult, solution, exerciseResults });
                 });
+
+                this.setExcercisesRegardingTheirCoverage(seriesExcercises, serieConfig.coverage);
             }
         });
 

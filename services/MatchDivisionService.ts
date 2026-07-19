@@ -25,6 +25,7 @@ export class MathDivisionService extends MathService {
         const hasGap = false;
         this.series.forEach((serieConfig) => {
             for (let i = 0; i < serieConfig.repetitions; i++) {
+                const seriesExcercises: MathExercise[] = [];
                 serieConfig.multipliers.forEach((multiplier) => {
                     const value1: ValueConfig = { value: serieConfig.serie * multiplier, operation: MATH_OPERATION_TYPES.DIVISION };
                     const value2: ValueConfig = { value: serieConfig.serie, operation: MATH_OPERATION_TYPES.DIVISION };
@@ -32,8 +33,9 @@ export class MathDivisionService extends MathService {
                     const exerciseResult = multiplier;
                     const solution = exerciseResult;
 
-                    this.exercises.push({ values: exerciseValues, hasGap, exerciseResult, solution });
+                    seriesExcercises.push({ values: exerciseValues, hasGap, exerciseResult, solution, exerciseResults: undefined });
                 });
+                this.setExcercisesRegardingTheirCoverage(seriesExcercises, serieConfig.coverage);
             }
         });
 

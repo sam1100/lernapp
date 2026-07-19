@@ -33,7 +33,7 @@ export class MathAdditionService extends MathService {
                     solution += addendValue;
                 });
                 const exerciseResult = solution;
-                this.exercises.push({ values, hasGap, exerciseResult, solution });
+                this.exercises.push({ values, hasGap, exerciseResult, solution, exerciseResults: undefined });
             }
         });
 

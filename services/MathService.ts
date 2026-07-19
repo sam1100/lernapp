@@ -48,6 +48,16 @@ export abstract class MathService extends ExerciseService<MathExercise> {
         return { value, operation };
     }
 
+    protected setExcercisesRegardingTheirCoverage(seriesExcercises: MathExercise[], coverage: number | undefined): void {
+        const shuffledExercises = seriesExcercises.slice(0, seriesExcercises.length).sort(() => Math.random() - 0.5);
+        const usedCoverage = coverage ?? 1.0;
+        const amount = Math.floor(shuffledExercises.length * usedCoverage);
+
+        //                console.log(`Serie: ${serieConfig.serie}, Coverage: ${coverage}, Amount: ${amount}, Total Exercises: ${shuffledExercises.length}`);
+
+        this.exercises.push(...shuffledExercises.slice(0, amount));
+    }
+
     public createRenderParts = (answer: string | null, gapSymbol: string): RenderParts => {
         const exercise = this.exercises[this.currentIndex] as MathExercise;
         let exerciseParts: RenderPart[] = [];

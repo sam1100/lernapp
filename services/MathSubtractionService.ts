@@ -39,7 +39,7 @@ export class MathSubtractionService extends MathService {
 
                 values.unshift({ value: result, operation: MATH_OPERATION_TYPES.SUBTRACTION });
 
-                this.exercises.push({ values, hasGap, exerciseResult: exerciseResult.value, solution: exerciseResult.value });
+                this.exercises.push({ values, hasGap, exerciseResult: exerciseResult.value, solution: exerciseResult.value, exerciseResults: undefined });
             }
         });
 
