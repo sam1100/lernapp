@@ -72,4 +72,9 @@ export default defineSchema({
         reward90: v.number(),
         reward80: v.number(),
     }),
+    rewards_redeem: defineTable({
+        description: v.string(),
+        costs: v.number(),
+        icon: v.string(),
+    }),
 });

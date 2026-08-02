@@ -2,7 +2,7 @@ import { api } from "@/convex/_generated/api";
 import { Doc } from "@/convex/_generated/dataModel";
 import { MathAdditionService } from "@/services/MathAdditionService";
 import { useConvex } from "convex/react";
-import React from 'react';
+import React, { useState } from 'react';
 import MathExerciseView from './mathexerciseview';
 
 
@@ -10,7 +10,7 @@ type MathAddition = Doc<"math_addition">;
 
 const MathAdditionSubject = () => {
     const convex = useConvex();
-    const [service, setService] = React.useState<MathAdditionService | null>(null);
+    const [service, setService] = useState<MathAdditionService | null>(null);
 
     async function fetchConfig() {
         let config = await convex.query(api.math.getMathAdditionConfig, {});

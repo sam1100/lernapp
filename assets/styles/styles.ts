@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 
 const fontDefinitions = {
     sizeStandard: 16,
+    sizeLarge: 24,
     fontFamilyFancy: 'whale',
     fontFamilyDigital: 'digital-7',
 };
@@ -12,6 +13,7 @@ export const colorDefinitions = {
     wrongAnswer: '#C00000',
     wrongAnswerBackground: 'rgba(239, 68, 68, 0.2)',
     placeholderText: '#cc9979',
+    redeemText: '#1e293b',
 };
 
 export const createStyles = () => {
@@ -356,6 +358,51 @@ export const createStyles = () => {
             position: "absolute",
             backfaceVisibility: "hidden",
         },
+        redeemListContainer: {
+            flex: 1,
+            width: '100%',
+            paddingHorizontal: 50,
+            paddingVertical: 50,
+        },
+        rewardRedeemIcon: {
+            width: 60,
+            height: 50,
+            transform: [{ rotate: "0deg" }],
+            overflow: "hidden",
+        },
+        redeemIcon: {
+            width: 50,
+            height: 40,
+            transform: [{ rotate: "-10deg" }],
+            overflow: "hidden",
+        },
+        redeemDescription: {
+            textAlign: 'left',
+            fontSize: fontDefinitions.sizeStandard,
+            fontFamily: fontDefinitions.fontFamilyFancy,
+            color: colorDefinitions.redeemText,
+            fontWeight: "bold",
+            includeFontPadding: false,
+            lineHeight: fontDefinitions.sizeStandard + 2,
+        },
+        redeemCosts: {
+            textAlign: 'left',
+            fontSize: fontDefinitions.sizeStandard,
+            fontFamily: fontDefinitions.fontFamilyFancy,
+            color: colorDefinitions.redeemText,
+            fontWeight: "bold",
+            includeFontPadding: false,
+            marginTop: 2,
+            lineHeight: fontDefinitions.sizeStandard + 2,
+        },
+        redeemBackground: {
+            flex: 1,
+            width: "100%",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
+            alignContent: "center",
+            overflow: "hidden",
+        }
     });
 
     return styles;

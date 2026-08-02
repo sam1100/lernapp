@@ -21,7 +21,7 @@ interface ProgressPart {
 }
 
 
-const MathExerciseView = ({ service }: { service: MathService | null }) => {
+const MathExerciseView = ({ service, headerImage }: { service: MathService | null, headerImage: any }) => {
 
     const gapSymbol = "___";
 
@@ -122,7 +122,7 @@ const MathExerciseView = ({ service }: { service: MathService | null }) => {
 
     return (
         <SafeAreaView style={styles.containerLayout} edges={[]}>
-            <HeaderSubject theme={mathTheme} styles={styles} image={multiplicationButton} progressParts={progressParts} doneCount={doneCount} totalCount={totalCount} />
+            <HeaderSubject theme={mathTheme} styles={styles} image={headerImage} progressParts={progressParts} doneCount={doneCount} totalCount={totalCount} />
             <ImageBackground source={tableImage} resizeMode="cover" style={styles.subjectWorkspace}>
                 {exercise != null ? (
                     <>
