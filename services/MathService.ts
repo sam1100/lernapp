@@ -69,7 +69,7 @@ export abstract class MathService extends ExerciseService<MathExercise> {
                 if (answer === null)
                     exerciseParts.push({ text: gapSymbol, isAnswer: false, isCorrect: false });
                 else
-                    exerciseParts.push({ text: answer, isAnswer: true, isCorrect: answer === exercise.solution.toString() });
+                    exerciseParts.push({ text: exercise.solution.toString(), isAnswer: true, isCorrect: answer === exercise.solution.toString() });
             else
                 exerciseParts.push({ text: values[i].value.toString(), isAnswer: false, isCorrect: false });
 
