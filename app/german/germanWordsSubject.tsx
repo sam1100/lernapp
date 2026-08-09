@@ -4,6 +4,7 @@ import HeaderSubject from "@/components/HeaderSubject";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { ProgressPart } from "@/components/ProgressBar";
 import { Doc } from "@/convex/_generated/dataModel";
+import useConfirmLeaveGuard from "@/hooks/useConfirmLeaveGuard";
 import useTheme from "@/hooks/useTheme";
 import { WordExercise, WordsService } from "@/services/WordsService";
 import * as Speech from 'expo-speech';
@@ -42,6 +43,7 @@ export default function GermanWordsSubject({ headerImage, words, reason }: { hea
             speak(exercise!.word);
     }, [words]);
 
+    useConfirmLeaveGuard(wordsServiceRef.current?.hasNext() ?? false);
 
     const nextExercise = (): void => {
         setRevealed(false);

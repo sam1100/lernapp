@@ -3,6 +3,7 @@ import ExerciseDone from '@/components/ExerciseDone';
 import HeaderSubject from '@/components/HeaderSubject';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { COIN_REASONS } from "@/convex/enums";
+import useConfirmLeaveGuard from '@/hooks/useConfirmLeaveGuard';
 import useTheme from '@/hooks/useTheme';
 import { MathExercise, MathService, RenderPart, RenderParts } from '@/services/MathService';
 import { Ionicons } from '@expo/vector-icons';
@@ -35,6 +36,8 @@ const MathExerciseView = ({ service, headerImage }: { service: MathService | nul
     const styles = createStyles();
     const mathServiceRef = useRef<MathService | null>(null);
     const inputRef = useRef<TextInput>(null);
+
+    useConfirmLeaveGuard(service?.hasNext() ?? false);
 
     useEffect(() => {
         if (!service) return;

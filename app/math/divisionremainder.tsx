@@ -4,14 +4,14 @@ import HeaderSubject from "@/components/HeaderSubject";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { api } from "@/convex/_generated/api";
 import { COIN_REASONS } from "@/convex/enums";
+import useConfirmLeaveGuard from "@/hooks/useConfirmLeaveGuard";
 import useTheme from "@/hooks/useTheme";
 import { MathDivisionRemainderAnswer, MathDivisionRemainderExercise, MathDivisionRemainderService } from "@/services/MathDivisionRemainderService";
 import { RenderPart, RenderParts } from "@/services/MathService";
 import { Ionicons } from "@expo/vector-icons";
-import { EventArg, NavigationAction, NavigationProp, ParamListBase, useNavigation } from "@react-navigation/native";
 import { useConvex } from "convex/react";
 import React, { useEffect, useRef, useState } from 'react';
-import { Alert, BackHandler, Image, ImageBackground, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Image, ImageBackground, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 
@@ -33,7 +33,6 @@ interface IsAnswerCorrect {
 const MathDivisionRemainderSubject = () => {
     const convex = useConvex();
     const [service, setService] = React.useState<MathDivisionRemainderService | null>(null);
-    const navigation = useNavigation<NavigationProp<ParamListBase>>();
 
     const gapSymbol = "___";
 
@@ -50,7 +49,6 @@ const MathDivisionRemainderSubject = () => {
     const inputRefRemainder = useRef<TextInput>(null);
     const isSubmittingQuotient = useRef(false);
     const isSubmittingRemainder = useRef(false);
-    const allowLeaveRef = useRef(false);
 
     async function fetchConfig() {
         let config = await convex.query(api.math.getMathDivisionRemainderConfig, {});
@@ -167,56 +165,7 @@ const MathDivisionRemainderSubject = () => {
     const totalCount = service?.getTotalExercisesCount() ?? 0;
     const doneCount = service?.getTotalAnswersCount() ?? 0;
 
-    useEffect(() => {
-        const shouldConfirmLeave = service?.hasNext() ?? false;
-
-        const showLeaveConfirmation = (onConfirm: () => void) => {
-            Alert.alert(
-                "Aufgabe verlassen?",
-                "Willst Du die Aufgabe wirklich verlassen?",
-                [
-                    {
-                        text: "Nein",
-                        style: "cancel",
-                    },
-                    {
-                        text: "Ja",
-                        style: "destructive",
-                        onPress: () => {
-                            allowLeaveRef.current = true;
-                            onConfirm();
-                        },
-                    },
-                ]
-            );
-        };
-
-        const onHardwareBackPress = () => {
-            if (!shouldConfirmLeave || allowLeaveRef.current) {
-                return false;
-            }
-
-            showLeaveConfirmation(() => navigation.goBack());
-            return true;
-        };
-
-        const onBeforeRemove = (e: EventArg<"beforeRemove", true, { action: NavigationAction }>) => {
-            if (!shouldConfirmLeave || allowLeaveRef.current) {
-                return;
-            }
-
-            e.preventDefault();
-            showLeaveConfirmation(() => navigation.dispatch(e.data.action));
-        };
-
-        const hardwareBackSubscription = BackHandler.addEventListener("hardwareBackPress", onHardwareBackPress);
-        const beforeRemoveSubscription = navigation.addListener("beforeRemove", onBeforeRemove);
-
-        return () => {
-            hardwareBackSubscription.remove();
-            beforeRemoveSubscription();
-        };
-    }, [exercise, isAnswerCorrect, navigation, progressParts.length, resultQuotient, resultRemainder]);
+    useConfirmLeaveGuard(service?.hasNext() ?? false);
 
     // console.log(`exercises: ${JSON.stringify(exercise)}`);
     //    console.log(`totalCount: ${totalCount}, doneCount: ${doneCount}`);

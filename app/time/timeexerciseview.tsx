@@ -5,6 +5,7 @@ import { ProgressPart } from '@/components/ProgressBar';
 import TimeBrickAnalogWatch from '@/components/TimeBrickAnalogWatch';
 import TimeBricksDigitalWatches from '@/components/TimeBrickDigitalWatches';
 import { COIN_REASONS } from '@/convex/enums';
+import useConfirmLeaveGuard from '@/hooks/useConfirmLeaveGuard';
 import useTheme from '@/hooks/useTheme';
 import { ComprehensiveCheckAnswerResult } from '@/services/ExerciseService';
 import { TimeAnalogToDigitalService } from '@/services/TimeAnalogToDigitalService';
@@ -54,9 +55,13 @@ const TimeExerciseView = ({ type, timeConfig }: { type: TimeExerciseType, timeCo
                 timeServiceRef.current = new TimeDigitalToAnalogService(timeConfig);
                 break;
         }
+
+
         nextExercise();
         setProgressParts([]);
     }, [timeConfig]);
+
+    useConfirmLeaveGuard(timeServiceRef.current?.hasNext() ?? false);
 
     const nextExercise = () => {
         setAnswerResult(null);
